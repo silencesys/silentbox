@@ -1,6 +1,6 @@
 {
   "name": "vue-silentbox",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A simple lightbox inspired Vue.js component.",
   "main": "index.js",
   "scripts": {
