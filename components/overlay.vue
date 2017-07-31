@@ -11,10 +11,14 @@
             <div class="silentbox-arrow silentbox-arrow-next" @click="this.$parent.nextItem"></div>
         </div>
 
-        <div id="silentbox-embed-overlay">
+        <div id="silentbox-embed-overlay" @click.stop="closeSilentboxOverlay">
             <iframe width="100%" height="100%" v-if="video" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
-            <img width="auto" height="auto" :src="getEmbedUrl" v-if="! video">
-            <p class="silentbox-embed-description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
+
+            <div id="silentbox-image-container" v-if="! video">
+                <div class="silentbox-position-helper"></div>
+                <img width="auto" height="auto" :src="getEmbedUrl">
+                <p class="silentbox-embed-description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
+            </div>
         </div>
     </section>
 </template>
@@ -68,45 +72,64 @@
 
 <style>
 #silentbox {
-        display: block;
-        height: 100%;
-        left: 0;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 999;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
 }
 #silentbox-embed-overlay {
-    display: block;
-    left: -35%;
+    cursor: default;
     height: 80%;
-    position: absolute;
+    left: -35%;
     margin: 0 50%;
-    text-align: center;
-    vertical-align: middle;
-    top: 10%;
+    position: absolute;
     width: 70%;
 }
-#silentbox-embed-overlay img {
-    max-width: 100%;
+#silentbox-image-container {
+    cursor: default;
+    height: 100%;
+    text-align: center;
+    width: 100%;
+}
+.silentbox-position-helper {
+    display: inline-block;
+    height: 100%;
+    margin-left: -1px;
+    position: relative;
+    vertical-align: middle;
+    width: 1px;
+}
+#silentbox-image-container img,
+iframe {
+    cursor: default;
+    box-shadow: 0 0 1.5em RGBA(0, 0, 0, .25);
     max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
 }
 #silentbox-overlay-background {
-        background: rgba(0, 0, 0, 0.65);
-        cursor: default;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    cursor: default;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
-.silentbox-item {
+.silentbox-item,
+.silentbox-single {
     cursor: pointer;
 }
 .silentbox-item:hover {
     text-decoration: underline;
 }
 .silentbox-embed-description {
+    text-align: center;
     color: #fff;
 }
 .silentbox-close-overlay {

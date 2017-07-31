@@ -35,8 +35,14 @@
             });
 
             window.addEventListener('keyup', (event) => {
-                if (event.which == 27) {
+                if (event.which === 27) {
                     this.overlayVisibility = false;
+                }
+                if (event.which === 39) {
+                    this.nextItem();
+                }
+                if (event.which === 37) {
+                    this.prevItem();
                 }
             });
         },

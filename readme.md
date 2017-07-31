@@ -29,6 +29,7 @@ or group instance which allows loop through items inside it.
 </silentbox-group>
 ```
 As you can see, both of the variants share some attributes which chould be filled.
+
 | Attribute | Description |
 |:------|:-----|
 | src | This attribute is source file or link which will be displayed inside Silentbox |
