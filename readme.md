@@ -1,6 +1,6 @@
 # Silentbox
 
-A simple lightbox inspired component for Vue.js.
+A simple lightbox inspired component for Vue.js. If you're interested, you can visit [demo site](http://silentbox.silencesys.com/).
 
 ## Installation
 ### Npm
@@ -16,11 +16,11 @@ Vue.use(VueSilentbox)
 ```
 
 ## Usage
-In the template you could use "single" silentbox instance
+In the template you can use "single" silentbox instance
 ```vue
 <silentbox-single src="" autoplay="true" description="">Single item</silentbox-single>
 ```
-or group instance which allows loop through items inside it.
+or group instance which will make gallery.
 ```vue
 <silentbox-group>
     <silentbox-item src="" autoplay="true" description="My very custom message">Item one</silentbox-item>
@@ -28,10 +28,10 @@ or group instance which allows loop through items inside it.
     <silentbox-item src="">Item three</silentbox-item>
 </silentbox-group>
 ```
-As you can see, both of the variants share some attributes which chould be filled.
+As you can see, both of the variants share some attributes which could be filled.
 
 | Attribute | Description |
 |:------|:-----|
-| src | This attribute is source file or link which will be displayed inside Silentbox |
-| autoplay | If you embed youtube videos, there could be set if they should be autoplayed |
-| description | Short description below the image/video |
+| src | media source, it could be an image or a youtube video |
+| autoplay | short description below image (doesn't work below videos yet) |
+| description | bool, to autoplay youtube video |
