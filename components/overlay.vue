@@ -122,7 +122,7 @@
 .silentbox-close-button {
     height: .75em;
     background: #fff;
-    -webkit-mask-box-image: url(./close-button.svg);
+    -webkit-mask-box-image: url('https://cdn.rawgit.com/silencesys/silentbox/f2e0bd0d/components/close-button.svg');
     margin: 0 auto;
     width: .75em;
 }
