@@ -92,7 +92,8 @@
     max-height: 100%;
 }
 #silentbox-overlay-background {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.65);
+        cursor: default;
         height: 100%;
         position: absolute;
         top: 0;
