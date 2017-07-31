@@ -1,0 +1,25 @@
+{
+  "name": "vue-silentbox",
+  "version": "0.0.9",
+  "description": "A simple lightbox inspired Vue.js component.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silencesys/silentbox.git"
+  },
+  "keywords": [
+    "Vue",
+    "Silentbox",
+    "Lightbox",
+    "Fancybox"
+  ],
+  "author": "Martin Rocek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/silencesys/silentbox/issues"
+  },
+  "homepage": "https://github.com/silencesys/silentbox#readme"
+}
