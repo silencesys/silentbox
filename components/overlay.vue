@@ -1,26 +1,25 @@
 <template>
-    <section id="silentbox" v-if="isVisible">
+    <div id="silentbox-overlay" v-if="isVisible">
         <div id="silentbox-overlay-background" @click.stop="closeSilentboxOverlay"></div>
 
-        <button class="silentbox-close-overlay" @click.stop="closeSilentboxOverlay">
-            <div class="silentbox-close-button"></div>
-        </button>
+        <div id="silentbox-overlay-content" @click.stop="closeSilentboxOverlay">
+            <div id="silentbox-overlay-embed">
+                <div id="silentbox-image-container">
+                    <iframe width="100%" height="100%" v-if="video" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
+                    <img width="auto" height="auto" :src="getEmbedUrl" v-if="! video">
+                </div>
+                <p class="silentbox-overlay-embed-description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
+            </div>
+        </div>
 
-        <div class="silentbox-navigation-arrows" v-if="this.$parent.items.total > 0">
+        <button class="silentbox-overlay-close" @click.stop="closeSilentboxOverlay">
+            <div class="silentbox-overlay-close-icon"></div>
+        </button>
+        <div class="silentbox-arrows" v-if="this.$parent.items.total > 0">
             <div class="silentbox-arrow silentbox-arrow-previous" @click="this.$parent.prevItem"></div>
             <div class="silentbox-arrow silentbox-arrow-next" @click="this.$parent.nextItem"></div>
         </div>
-
-        <div id="silentbox-embed-overlay" @click.stop="closeSilentboxOverlay">
-            <iframe width="100%" height="100%" v-if="video" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
-
-            <div id="silentbox-image-container" v-if="! video">
-                <div class="silentbox-position-helper"></div>
-                <img width="auto" height="auto" :src="getEmbedUrl">
-                <p class="silentbox-embed-description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
-            </div>
-        </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -70,47 +69,15 @@
     }
 </script>
 
-<style>
-#silentbox {
-    display: flex;
-    flex-direction: column;
+<style lang="scss">
+#silentbox-overlay {
+    display: block;
     height: 100%;
-    justify-content: center;
     left: 0;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 999;
-}
-#silentbox-embed-overlay {
-    cursor: default;
-    height: 80%;
-    left: -35%;
-    margin: 0 50%;
-    position: absolute;
-    width: 70%;
-}
-#silentbox-image-container {
-    cursor: default;
-    height: 100%;
-    text-align: center;
-    width: 100%;
-}
-.silentbox-position-helper {
-    display: inline-block;
-    height: 100%;
-    margin-left: -1px;
-    position: relative;
-    vertical-align: middle;
-    width: 1px;
-}
-#silentbox-image-container img,
-iframe {
-    cursor: default;
-    box-shadow: 0 0 1.5em RGBA(0, 0, 0, .25);
-    max-height: 100%;
-    max-width: 100%;
-    vertical-align: middle;
 }
 #silentbox-overlay-background {
     background: rgba(0, 0, 0, 0.75);
@@ -121,6 +88,50 @@ iframe {
     left: 0;
     width: 100%;
 }
+#silentbox-overlay-content {
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+#silentbox-overlay-navigation {
+    display: block;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    position: relative;
+}
+#silentbox-overlay-embed {
+    cursor: default;
+    height: 80%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    margin: auto;
+    width: 70%;
+}
+#silentbox-image-container {
+    cursor: default;
+    min-height: 100%;
+    text-align: center;
+    position: relative;
+    min-width: 100%;
+}
+#silentbox-image-container img,
+iframe {
+    cursor: default;
+    box-shadow: 0 0 1.5em RGBA(0, 0, 0, .25);
+    max-height: 100%;
+    max-width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    margin: auto;
+}
 .silentbox-item,
 .silentbox-single {
     cursor: pointer;
@@ -128,11 +139,13 @@ iframe {
 .silentbox-item:hover {
     text-decoration: underline;
 }
-.silentbox-embed-description {
+p.silentbox-overlay-embed-description {
+    display: block;
+    padding-top: 1em;
     text-align: center;
     color: #fff;
 }
-.silentbox-close-overlay {
+.silentbox-overlay-close {
     background: rgba(0, 0, 0, .0);
     border: none;
     color: #fff;
@@ -143,19 +156,47 @@ iframe {
     top: 0;
     width: 2.5em;
 }
-.silentbox-close-button {
-    height: .75em;
-    background: #fff;
-    -webkit-mask-box-image: url('https://cdn.rawgit.com/silencesys/silentbox/f2e0bd0d/components/close-button.svg');
-    margin: 0 auto;
-    width: .75em;
+.silentbox-overlay-close-icon {
+    color: #fff;
+    cursor: pointer;
+    left: .7em;
+    height: 1em;
+    width: 1em;
+    right: 0px;
+    top: -.5em;
+    margin: 50% 50% 0 0;
+    position: absolute;
+    transition: 250ms ease;
+
+    &:before,
+    &:after {
+        content: "";
+        height: 2px;
+        background: #fff;
+        width: 100%;
+        top: 50%;
+        left: 5%;
+        position: absolute;
+        transition: 250ms ease;
+    }
+    &:before {
+        transform: rotate(-45deg);
+    }
+    &:after {
+        transform: rotate(45deg);
+    }
+    &:hover,
+    &:focus {
+        &:before,
+        &:after {
+            width: 50%;
+            left: 25%;
+        }
+    }
 }
-.silentbox-close-overlay:hover {
+.silentbox-overlay-close:hover {
     outline: none;
     background-color: rgba(0, 0, 0, .5);
-}
-.silentbox-close-overlay:hover .silentbox-close-button {
-    background: #a6fcd4;
 }
 .silentbox-arrow {
     border-top: 2px solid #fff;
