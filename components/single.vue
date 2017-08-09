@@ -11,16 +11,6 @@
     export default {
         props: ['src', 'autoplay', 'description'],
         components: {'silentbox-overlay': overlay},
-        data() {
-            return {
-                overlayVisibility: false,
-                embedUrl: undefined,
-                items: {
-                    total: 0,
-                    position: 0
-                }
-            }
-        },
         methods: {
             closeSilentBoxOverlay() {
                 this.overlayVisibility = false;
@@ -30,6 +20,16 @@
                     this.embedUrl = this.src;
                 }
                 this.overlayVisibility = true;
+            }
+        },
+        data() {
+            return {
+                overlayVisibility: false,
+                embedUrl: undefined,
+                items: {
+                    total: 0,
+                    position: 0
+                }
             }
         },
         mounted() {
@@ -45,3 +45,10 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .silentbox-single {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
