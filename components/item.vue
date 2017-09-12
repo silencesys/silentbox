@@ -6,12 +6,21 @@
 
 <script>
     export default {
+        name: 'SilentboxItem',
         props: {
+            // Media source, it could be an image or a youtube video.
             'src': {
                 type: String,
                 required: true
             },
-            'autoplay': Boolean,
+            // Should be video autoplayed.
+            'autoplay': {
+                type: Boolean,
+                default() {
+                    return false;
+                }
+            },
+            // Short description below image.
             'description': String
         },
         computed: {
@@ -30,7 +39,6 @@
             openSilentBoxOverlay() {
                 this.$parent.$emit('openSilentboxOverlay', {
                     url: this.embedUrl,
-                    // position: this._uid - 2,
                     position: this.$parent.position,
                     autoplay: this.autoplay,
                     description: this.description

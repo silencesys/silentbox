@@ -9,18 +9,22 @@
     import overlay from './overlay.vue';
 
     export default {
-        props: ['src', 'autoplay', 'description'],
-        components: {'silentbox-overlay': overlay},
-        methods: {
-            closeSilentBoxOverlay() {
-                this.overlayVisibility = false;
+        name: 'SilentboxSingle',
+        props: {
+            // Media source, it could be an image or a youtube video.
+            'src': {
+                type: String,
+                required: true
             },
-            openSilentBoxOverlay() {
-                if (this.src !== null) {
-                    this.embedUrl = this.src;
+            // Should be video autoplayed.
+            'autoplay': {
+                type: Boolean,
+                default() {
+                    return false;
                 }
-                this.overlayVisibility = true;
-            }
+            },
+            // Short description below image.
+            'description': String
         },
         data() {
             return {
@@ -30,6 +34,20 @@
                     total: 0,
                     position: 0
                 }
+            }
+        },
+        components: {
+            'silentbox-overlay': overlay
+        },
+        methods: {
+            closeSilentBoxOverlay() {
+                this.overlayVisibility = false;
+            },
+            openSilentBoxOverlay() {
+                if (this.src !== null) {
+                    this.embedUrl = this.src;
+                }
+                this.overlayVisibility = true;
             }
         },
         mounted() {

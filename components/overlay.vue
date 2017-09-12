@@ -25,6 +25,12 @@
 
 <script>
     export default {
+        name: 'SilentboxOverlay',
+        data() {
+            return {
+                video: false
+            }
+        },
         computed: {
             getEmbedUrl() {
                 return this.handleUrl(this.$parent.embedUrl);
@@ -67,11 +73,6 @@
 
                     return url;
                 }
-            }
-        },
-        data() {
-            return {
-                video: false
             }
         },
         beforeUpdate() {

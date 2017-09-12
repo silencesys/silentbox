@@ -9,7 +9,7 @@
     import overlay from './overlay.vue';
 
     export default {
-        components: {'silentbox-overlay': overlay},
+        name: 'SilentboxGroup',
         data() {
             return {
                 overlayVisibility: false,
@@ -22,29 +22,8 @@
                 description: ''
             }
         },
-        created() {
-            this.$on('closeSilentboxOverlay', () => {
-                this.overlayVisibility = false;
-            });
-            this.$on('openSilentboxOverlay', item => {
-                this.embedUrl = item.url;
-                this.items.position = item.position;
-                this.overlayVisibility = true;
-                this.autoplay = item.autoplay;
-                this.description = item.description;
-            });
-
-            window.addEventListener('keyup', (event) => {
-                if (event.which === 27) {
-                    this.overlayVisibility = false;
-                }
-                if (event.which === 39) {
-                    this.nextItem();
-                }
-                if (event.which === 37) {
-                    this.prevItem();
-                }
-            });
+        components: {
+            'silentbox-overlay': overlay
         },
         methods: {
             // Open next item in the queue
@@ -83,6 +62,30 @@
                 this.description = (this.$children[this.items.position].description !== undefined)
                     ? this.$children[this.items.position].description : false;
             }
+        },
+        created() {
+            this.$on('closeSilentboxOverlay', () => {
+                this.overlayVisibility = false;
+            });
+            this.$on('openSilentboxOverlay', item => {
+                this.embedUrl = item.url;
+                this.items.position = item.position;
+                this.overlayVisibility = true;
+                this.autoplay = item.autoplay;
+                this.description = item.description;
+            });
+
+            window.addEventListener('keyup', (event) => {
+                if (event.which === 27) {
+                    this.overlayVisibility = false;
+                }
+                if (event.which === 39) {
+                    this.nextItem();
+                }
+                if (event.which === 37) {
+                    this.prevItem();
+                }
+            });
         },
         mounted() {
             // When our vue component is loaded, we need to get count of silentbox-items
