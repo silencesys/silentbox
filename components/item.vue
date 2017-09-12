@@ -23,7 +23,8 @@
             openSilentBoxOverlay() {
                 this.$parent.$emit('openSilentboxOverlay', {
                     url: this.embedUrl,
-                    position: this._uid - 2,
+                    //position: this._uid - 2,
+                    position: this.position,
                     autoplay: this.autoplay,
                     description: this.description
                 });
