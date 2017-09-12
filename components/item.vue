@@ -6,7 +6,14 @@
 
 <script>
     export default {
-        props: ['src', 'autoplay', 'description'],
+        props: {
+            'src': {
+                type: String,
+                required: true
+            },
+            'autoplay': Boolean,
+            'description': String
+        },
         computed: {
             embedUrl() {
                 if (this.src !== null) {
@@ -23,8 +30,8 @@
             openSilentBoxOverlay() {
                 this.$parent.$emit('openSilentboxOverlay', {
                     url: this.embedUrl,
-                    //position: this._uid - 2,
-                    position: this.position,
+                    // position: this._uid - 2,
+                    position: this.$parent.position,
                     autoplay: this.autoplay,
                     description: this.description
                 });

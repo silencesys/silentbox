@@ -143,7 +143,7 @@ $bg: #000;
         margin: auto;
         position: absolute;
         right: 0;
-        top: -5rem;
+        top: -2.5rem;
         width: 75%;
 
         img,

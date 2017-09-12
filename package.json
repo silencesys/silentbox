@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/silencesys/silentbox/issues"
   },
-  "homepage": "https://github.com/silencesys/silentbox#readme"
+  "homepage": "https://github.com/silencesys/silentbox#readme",
+  "dependencies": {
+    "vue-touch": "^2.0.0-beta.4"
+  }
 }
