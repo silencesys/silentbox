@@ -91,6 +91,7 @@
             for (let i = 0; i < this.$children.length; i++) {
                 if (this.$children[i].$options._componentTag === 'silentbox-item') {
                     this.items.total++;
+                    this.$children.position = i
                 }
             }
         }
