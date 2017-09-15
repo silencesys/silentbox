@@ -13,7 +13,7 @@
                 type: String,
                 required: true
             },
-            // Should be video autoplayed.
+            // True if video should be autoplayed.
             'autoplay': {
                 type: Boolean,
                 default() {
@@ -21,7 +21,8 @@
                 }
             },
             // Short description below image.
-            'description': String
+            'description': String,
+            'position': {}
         },
         computed: {
             embedUrl() {
@@ -32,6 +33,9 @@
                 return null;
             }
         },
+        created() {
+            this.$parent.items.list.push(this.src);
+        },
         methods: {
             closeSilentBoxOverlay() {
                 this.$parent.$emit('closeSilentboxOverlay');
@@ -39,7 +43,7 @@
             openSilentBoxOverlay() {
                 this.$parent.$emit('openSilentboxOverlay', {
                     url: this.embedUrl,
-                    position: this.$parent.position,
+                    position: this.$parent.items.list.indexOf(this.src),
                     autoplay: this.autoplay,
                     description: this.description
                 });
