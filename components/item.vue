@@ -25,6 +25,10 @@
             'position': {}
         },
         computed: {
+            /**
+             * Get embed URL.
+             * @return {string|null}
+             */
             embedUrl() {
                 if (this.src !== null) {
                     return this.src;
@@ -33,21 +37,40 @@
                 return null;
             }
         },
-        created() {
-            this.$parent.items.list.push(this.src);
-        },
         methods: {
+            /**
+             * Emit an event that overlay should be hidden.
+             *
+             * @return {void}
+             */
             closeSilentBoxOverlay() {
                 this.$parent.$emit('closeSilentboxOverlay');
             },
+            /**
+             * Emit an event that overlay should be opened.
+             *
+             * @return {void}
+             */
             openSilentBoxOverlay() {
+                let itemIndex = this.$parent.items.list.findIndex(item => item.src === this.src);
+
                 this.$parent.$emit('openSilentboxOverlay', {
                     url: this.embedUrl,
-                    position: this.$parent.items.list.indexOf(this.src),
+                    position: itemIndex,
                     autoplay: this.autoplay,
                     description: this.description
                 });
             }
+        },
+        created() {
+            // Push items to the parent component.
+            // TODO: do it in parent component
+            this.$parent.items.list.push({
+                src: this.src,
+                autoplay: this.autoplay,
+                desc: this.description,
+                position: this.position
+            });
         }
     }
 </script>

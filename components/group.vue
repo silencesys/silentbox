@@ -23,80 +23,113 @@
                 description: ''
             }
         },
-        components: {
-            'silentbox-overlay': overlay
+        watch: {
+            /**
+             * Update total number of items when object changes.
+             *
+             * @param  {Object} current
+             * @param  {Object} old
+             * @return {void}
+             */
+            'items.list': function (current, old) {
+                this.updateTotal(current);
+            }
         },
         methods: {
-            // Open next item in the queue
+            /**
+             * Update count of total items in group.
+             *
+             * @param  {object} items
+             * @return {void}
+             */
+            updateTotal(items) {
+                this.items.total = this.items.list.length;
+            },
+            /**
+             * Move to next item in a group.
+             *
+             * @return {void}
+             */
             nextItem() {
-                let item = this.$children[this.items.position + 1].$options._componentTag;
-
                 if (this.items.position !== (this.items.total - 1)) {
                     this.items.position++;
                 } else {
                     this.items.position = 0;
                 }
 
-                this.embedUrl = this.$children[this.items.position].src;
+                this.embedUrl = this.items.list[this.items.position].src;
 
-                this.autoplay = (this.$children[this.items.position].autoplay !== undefined)
-                    ? this.$children[this.items.position].autoplay : false;
+                this.autoplay = (this.items.list[this.items.position].autoplay !== undefined)
+                    ? this.items.list[this.items.position].autoplay : false;
 
-                this.description = (this.$children[this.items.position].description !== undefined)
-                    ? this.$children[this.items.position].description : false;
+                this.description = (this.items.list[this.items.position].desc !== undefined)
+                    ? this.items.list[this.items.position].desc : false;
             },
-            // Open previous item in the queue
+            /**
+             * Move to previous item in a group.
+             *
+             * @return {void}
+             */
             prevItem() {
-                let item = this.$children[this.items.position].$options._componentTag;
-
                 if (this.items.position !== 0) {
                     this.items.position--;
                 } else {
                     this.items.position = this.items.total - 1;
                 }
 
-                this.embedUrl = this.$children[this.items.position].src;
+                this.embedUrl = this.items.list[this.items.position].src;
 
-                this.autoplay = (this.$children[this.items.position].autoplay !== undefined)
-                    ? this.$children[this.items.position].autoplay : false;
+                this.autoplay = (this.items.list[this.items.position].autoplay !== undefined)
+                    ? this.items.list[this.items.position] : false;
 
-                this.description = (this.$children[this.items.position].description !== undefined)
-                    ? this.$children[this.items.position].description : false;
-            }
-        },
-        created() {
-            this.$on('closeSilentboxOverlay', () => {
-                this.overlayVisibility = false;
-            });
-            this.$on('openSilentboxOverlay', item => {
+                this.description = (this.items.list[this.items.position].desc !== undefined)
+                    ? this.items.list[this.items.position].desc : false;
+            },
+            /**
+             * Set item that shuld be displayed.
+             *
+             * @return {void}
+             */
+            setOpened(item) {
                 this.embedUrl = item.url;
                 this.items.position = item.position;
                 this.overlayVisibility = true;
                 this.autoplay = item.autoplay;
                 this.description = item.description;
+            }
+        },
+        components: {
+            'silentbox-overlay': overlay
+        },
+        mounted() {
+            // Hide overlay when user click outside or on close button.
+            this.$on('closeSilentboxOverlay', () => {
+                this.overlayVisibility = false;
             });
 
+            // Set first opened item when overlay opens.
+            this.$on('openSilentboxOverlay', item => {
+                this.setOpened(item);
+            });
+
+            // Update total number of available items in group.
+            this.updateTotal(this.items);
+
+            // Listen to key events.
             window.addEventListener('keyup', (event) => {
+                // Escape: 27
                 if (event.which === 27) {
                     this.overlayVisibility = false;
                 }
+                // Right arrow: 39
                 if (event.which === 39) {
                     this.nextItem();
                 }
+                // Left arrow: 37
                 if (event.which === 37) {
                     this.prevItem();
                 }
             });
-        },
-        mounted() {
-            // When our vue component is loaded, we need to get count of silentbox-items
-            this.items.total = 0;
-
-            for (let i = 0; i < this.$children.length; i++) {
-                if (this.$children[i].$options._componentTag === 'silentbox-item') {
-                    this.items.total++;
-                }
-            }
         }
     }
 </script>
