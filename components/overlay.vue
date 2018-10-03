@@ -7,7 +7,7 @@
                 <div id="silentbox-overlay__container">
                     <iframe width="100%" height="100%" v-if="youtubeVideo" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
                     <img width="auto" height="auto" :src="getEmbedUrl" v-if="image">
-                    <video width="auto" height="auto" :src="getEmbedUrl" v-if="video" controls>
+                    <video width="70%" height="auto" :src="getEmbedUrl" v-if="video" controls></video>
                 </div>
                 <p id="silentbox-overlay__description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
             </div>
@@ -27,14 +27,16 @@
 <script>
     export default {
         name: 'SilentboxOverlay',
-        data() {
-            return {
-                youtubeVideo: false,
-                image: false,
-                video: false,
-            }
-        },
         computed: {
+            youtubeVideo() {
+                return this.$parent.embedUrl.includes('youtube.com');
+            },
+            image() {
+                return !this.youtubeVideo && !this.video;
+            },
+            video() {
+                return (/\.(mp4|avi|mkv|wmv|mov|flv)/igm).test(this.$parent.embedUrl.toLowerCase());
+            },
             getEmbedUrl() {
                 return this.handleUrl(this.$parent.embedUrl);
             },
@@ -59,7 +61,6 @@
             },
             handleUrl(url) {
                 if (url.includes('youtube.com')) {
-                    this.youtubeVideo = true;
 
                     let videoIdPosition  = url.indexOf('v=') + 2;
                     let videoId = url.substring(videoIdPosition);
@@ -71,12 +72,7 @@
                     }
 
                     return videoUrl;
-                } else if (/(\.mp4|\.avi|\.mkv|\.wmv|\.mov|\.flv)$/i.exec(url.toLowerCase())) {
-                    this.video = true;
-                    return url;
-                }
-                else {
-                    this.image = true;
+                } else {
                     return url;
                 }
             }
