@@ -5,8 +5,9 @@
         <div id="silentbox-overlay__content" @click.stop="closeSilentboxOverlay">
             <div id="silentbox-overlay__embed">
                 <div id="silentbox-overlay__container">
-                    <iframe width="100%" height="100%" v-if="video" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
-                    <img width="auto" height="auto" :src="getEmbedUrl" v-if="! video">
+                    <iframe width="100%" height="100%" v-if="youtubeVideo" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
+                    <img width="auto" height="auto" :src="getEmbedUrl" v-if="image">
+                    <video width="auto" height="auto" :src="getEmbedUrl" v-if="video" controls>
                 </div>
                 <p id="silentbox-overlay__description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
             </div>
@@ -28,7 +29,9 @@
         name: 'SilentboxOverlay',
         data() {
             return {
-                video: false
+                youtubeVideo: false,
+                image: false,
+                video: false,
             }
         },
         computed: {
@@ -56,7 +59,7 @@
             },
             handleUrl(url) {
                 if (url.includes('youtube.com')) {
-                    this.video = true;
+                    this.youtubeVideo = true;
 
                     let videoIdPosition  = url.indexOf('v=') + 2;
                     let videoId = url.substring(videoIdPosition);
@@ -68,9 +71,12 @@
                     }
 
                     return videoUrl;
-                } else {
-                    this.video = false;
-
+                } else if (/(\.mp4|\.avi|\.mkv|\.wmv|\.mov|\.flv)$/i.exec(url.toLowerCase())) {
+                    this.video = true;
+                    return url;
+                }
+                else {
+                    this.image = true;
                     return url;
                 }
             }
