@@ -161,7 +161,7 @@ $bg: #000;
         img,
         iframe {
             background-image: /* tint image */
-                            linear-gradient(to right, rgba(192, 192, 192, 0.65), rgba(192, 192, 192, 0.65)),
+                            linear-gradient(to right, rgba(192, 192, 192, 0.8), rgba(192, 192, 192, 0.8)),
                             /* checkered effect */
                             linear-gradient(to right, black 50%, white 50%),
                             linear-gradient(to bottom, black 50%, white 50%);
