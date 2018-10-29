@@ -160,12 +160,14 @@ $bg: #000;
 
         img,
         iframe {
-            background-color: linear-gradient(45deg, #808080 25%, transparent 25%),
-                linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%),
-                linear-gradient(-45deg, transparent 75%, #808080 75%);
-
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 0, 10px -10px, 0px 10px;
+            background-image: /* tint image */
+                            linear-gradient(to right, rgba(192, 192, 192, 0.65), rgba(192, 192, 192, 0.65)),
+                            /* checkered effect */
+                            linear-gradient(to right, black 50%, white 50%),
+                            linear-gradient(to bottom, black 50%, white 50%);
+            background-blend-mode: normal, difference, normal;
+            background-size: 1rem 1rem;
+            background-repeat: repeat;
             bottom: 0;
             box-shadow: 0 0 1.5rem rgba($bg, .45);
             cursor: default;
