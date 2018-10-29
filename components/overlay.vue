@@ -160,7 +160,12 @@ $bg: #000;
 
         img,
         iframe {
-            background-color: $bg;
+            background-color: linear-gradient(45deg, #808080 25%, transparent 25%),
+                linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%),
+                linear-gradient(-45deg, transparent 75%, #808080 75%);
+
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 0, 10px -10px, 0px 10px;
             bottom: 0;
             box-shadow: 0 0 1.5rem rgba($bg, .45);
             cursor: default;
