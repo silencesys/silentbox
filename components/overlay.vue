@@ -6,7 +6,7 @@
             <div id="silentbox-overlay__embed">
                 <div id="silentbox-overlay__container">
                     <iframe width="100%" height="100%" v-if="youtubeVideo" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
-                    <img width="auto" height="auto" :src="getEmbedUrl" v-if="image">
+                    <img class="silentbox-overlay__image" width="auto" height="auto" :src="getEmbedUrl" v-if="image">
                     <video width="70%" height="auto" :src="getEmbedUrl" v-if="video" controls></video>
                 </div>
                 <p id="silentbox-overlay__description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
@@ -127,6 +127,15 @@ $bg: #000;
         position: absolute;
         top: 0;
         width: 100%;
+    }
+
+    @include element(image) {
+        background-image: linear-gradient(45deg, #808080 25%, transparent 25%),
+			linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%),
+			linear-gradient(-45deg, transparent 75%, #808080 75%);
+
+		background-size: 20px 20px;
+		background-position: 0 0, 10px 0, 10px -10px, 0px 10px;
     }
 
     @include element(content) {
