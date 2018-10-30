@@ -33,7 +33,7 @@
                 return this.$parent.embedUrl.includes('youtube.com');
             },
             image() {
-                return !this.youtubeVideo && !this.video;
+                return !this.youtubeVideo && !this.video && !this.audio;
             },
             video() {
                 return (/\.(mp4|avi|mkv|wmv|mov|flv)/igm).test(this.$parent.embedUrl.toLowerCase());
@@ -60,8 +60,10 @@
             {
                 this.$parent.prevItem();
             },
-            closeSilentboxOverlay() {
-                this.$parent.$emit('closeSilentboxOverlay');
+            closeSilentboxOverlay(event) {
+                if (event.target.localName !== 'audio') {
+                    this.$parent.$emit('closeSilentboxOverlay');
+                }
             },
             handleUrl(url) {
                 if (url.includes('youtube.com')) {
@@ -174,6 +176,20 @@ $bg: #000;
             background-repeat: repeat;
             bottom: 0;
             box-shadow: 0 0 1.5rem rgba($bg, .45);
+            cursor: default;
+            display: block;
+            left: 0;
+            margin: auto;
+            max-height: 100%;
+            max-width: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        audio,
+        video {
+            bottom: 0;
             cursor: default;
             display: block;
             left: 0;
