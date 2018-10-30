@@ -8,6 +8,7 @@
                     <iframe width="100%" height="100%" v-if="youtubeVideo" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
                     <img class="silentbox-overlay__image" width="auto" height="auto" :src="getEmbedUrl" v-if="image">
                     <video width="70%" height="auto" :src="getEmbedUrl" v-if="video" controls></video>
+                    <audio v-if="audio" :src="getEmbedUrl"></audio>
                 </div>
                 <p id="silentbox-overlay__description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
             </div>
@@ -36,6 +37,9 @@
             },
             video() {
                 return (/\.(mp4|avi|mkv|wmv|mov|flv)/igm).test(this.$parent.embedUrl.toLowerCase());
+            },
+            audio() {
+                return (/\.(mp3|wav|ogg)/igm).test(this.$parent.embedUrl.toLowerCase());
             },
             getEmbedUrl() {
                 return this.handleUrl(this.$parent.embedUrl);
