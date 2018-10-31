@@ -8,7 +8,7 @@
                     <iframe width="100%" height="100%" v-if="youtubeVideo" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
                     <img class="silentbox-overlay__image" width="auto" height="auto" :src="getEmbedUrl" v-if="image">
                     <video width="70%" height="auto" :src="getEmbedUrl" v-if="video" controls></video>
-                    <audio v-if="audio" :src="getEmbedUrl"></audio>
+                    <audio v-if="audio" :src="getEmbedUrl" controls></audio>
                 </div>
                 <p id="silentbox-overlay__description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
             </div>
