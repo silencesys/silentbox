@@ -29,7 +29,7 @@
                 src: url({{getEmbedUrl}});
               }
             </style>
-            <p style="font-family: overlay-font"></p>
+            <p style="font-family: overlay-font">Test Test</p>
           </div>
         </div>
         <p
@@ -76,7 +76,7 @@ export default {
       return this.$parent.embedUrl.includes("youtube.com");
     },
     image() {
-      return !this.youtubeVideo && !this.video && !this.audio;
+      return !this.youtubeVideo && !this.video && !this.audio && !this.font;
     },
     video() {
       return /\.(mp4|avi|mkv|wmv|mov|flv)/gim.test(
