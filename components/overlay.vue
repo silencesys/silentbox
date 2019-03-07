@@ -22,7 +22,7 @@
           >
           <video width="70%" height="auto" :src="getEmbedUrl" v-if="video" controls></video>
           <audio v-if="audio" :src="getEmbedUrl" controls></audio>
-          <div v-if="font">
+          <div v-if="font" class="silentbox-overlay__font">
             <style>
               @font-face {
                 font-family: overlay-font;
@@ -87,6 +87,11 @@ export default {
       return /\.(mp3|wav|ogg)/gim.test(this.$parent.embedUrl.toLowerCase());
     },
     font() {
+      console.log(
+        "is font? ",
+        /\.(ttf|woff|woff2|)/gim.test(this.$parent.embedUrl.toLowerCase())
+      );
+      console.log(this.$parent.embedUrl);
       return /\.(ttf|woff|woff2|)/gim.test(this.$parent.embedUrl.toLowerCase());
     },
     getEmbedUrl() {
