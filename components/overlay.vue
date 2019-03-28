@@ -68,6 +68,33 @@
                     }
 
                     return videoUrl;
+                } else if (url.includes('youtu.be')) {
+                    this.video = true;
+                    let videoUrl = "";
+                    const youtubeUrl = url.replace(/(>|<)/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+                    if (youtubeUrl[2] !== undefined) {
+                        const youtubeId = youtubeUrl[2].split(/[^0-9a-z_\-]/i);
+
+                        videoUrl = 'https://www.youtube.com/embed/' + youtubeId[0];
+
+                        if (this.$parent.autoplay) {
+                            videoUrl += '?autoplay=1';
+                        }
+                    }
+                    return videoUrl;
+
+                } else if (url.includes("vimeo")) {
+                    this.video = true;
+                    let videoUrl = "";
+                    const vimoId = /(vimeo(pro)?\.com)\/(?:[^\d]+)?(\d+)\??(.*)?$/.exec(url)[3];
+                    if (vimoId !== undefined) {
+                        videoUrl = 'https://player.vimeo.com/video/'+ vimoId;
+                        if (this.$parent.autoplay) {
+                            videoUrl += '?autoplay=1';
+                        }
+                    }
+                    return videoUrl;
+
                 } else {
                     this.video = false;
 
