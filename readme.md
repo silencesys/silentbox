@@ -32,6 +32,6 @@ As you can see, both of the variants share some attributes which could be filled
 
 | Attribute | Description |
 |:------|:-----|
-| src | media source, it could be an image or a youtube video |
+| src | media source, it could be an image or a youtube / Vimeo video |
 | description | short description below image (doesn't work below videos yet) |
-| autoplay | bool, to autoplay youtube video |
+| autoplay | bool, to autoplay youtube / Vimeo video |
