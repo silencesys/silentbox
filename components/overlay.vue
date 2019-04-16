@@ -23,13 +23,13 @@
           <video width="70%" height="auto" :src="getEmbedUrl" v-if="video" controls></video>
           <audio v-if="audio" :src="getEmbedUrl" controls></audio>
           <div v-if="font" class="silentbox-overlay__font">
-            <style>
+            <!-- <style>
               @font-face {
                 font-family: overlay-font;
                 src: url({{getEmbedUrl}});
               }
             </style>
-            <p style="font-family: overlay-font">Test Test</p>
+            <p style="font-family: overlay-font">Test Test</p>-->
           </div>
         </div>
         <p
