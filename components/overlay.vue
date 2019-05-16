@@ -31,7 +31,7 @@
         mixins: [ VideoUrlDecoderMixin ],
         data() {
             return {
-                video: true
+                video: false
             }
         },
         computed: {
@@ -81,8 +81,10 @@
              */
             handleUrl(url) {
                 if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    this.video = true;
                     return this.getYoutubeVideo(url);
                 } else if (url.includes("vimeo")) {
+                    this.video = true;
                     return this.getVimeoVideo(url);
                 } else {
                     // Given url is not a video URL thus return it as it is.

@@ -2,13 +2,18 @@
   "name": "vue-silentbox",
   "version": "0.1.4",
   "description": "A simple lightbox inspired Vue.js component.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "dist/vue-silentbox.umd.js",
+  "module": "dist/vue-silentbox.esm.js",
+  "unpkg": "dist/vue-silentbox.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/silencesys/silentbox.git"
+  },
+  "scripts": {
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/vue-silentbox.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/vue-silentbox.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/vue-silentbox.min.js"
   },
   "keywords": [
     "Vue",
@@ -21,5 +26,13 @@
   "bugs": {
     "url": "https://github.com/silencesys/silentbox/issues"
   },
-  "homepage": "https://github.com/silencesys/silentbox#readme"
+  "homepage": "https://github.com/silencesys/silentbox#readme",
+  "devDependencies": {
+    "rollup": "^1.12.1",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-vue": "^5.0.0",
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  }
 }
