@@ -37,6 +37,13 @@
             'thumbnailHeight': {
                 type: String,
                 default: '150px'
+            },
+            // Hide player controls
+            'hideControls': {
+                type: Boolean,
+                default() {
+                    return false;
+                }
             }
         },
         data() {
