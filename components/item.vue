@@ -1,12 +1,17 @@
 <template>
     <span class="silentbox-item" :src="src" @click="openSilentBoxOverlay">
-        <slot></slot>
+        <slot>
+            <img :src="getThumnail(src)" :width="thumbnailWidth" :height="thumbnailHeight" />
+        </slot>
     </span>
 </template>
 
 <script>
+    import ItemMixin from './../mixins/item';
+
     export default {
         name: 'SilentboxItem',
+        mixins: [ ItemMixin ],
         props: {
             // Media source, it could be an image or a youtube video.
             'src': {
@@ -22,7 +27,15 @@
             },
             // Short description below image.
             'description': String,
-            'position': {}
+            'position': {},
+            'thumbnailWidth': {
+                type: String,
+                default: '200px'
+            },
+            'thumbnailHeight': {
+                type: String,
+                default: '150px'
+            }
         },
         computed: {
             /**

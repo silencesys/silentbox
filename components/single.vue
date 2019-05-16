@@ -1,15 +1,20 @@
 <template>
     <span class="silentbox-single" :src="src" @click="openSilentBoxOverlay">
-        <slot></slot>
+        <slot>
+            <img :src="getThumnail(src)" :width="thumbnailWidth" :height="thumbnailHeight">
+        </slot>
         <silentbox-overlay></silentbox-overlay>
     </span>
 </template>
 
 <script>
-    import overlay from './overlay.vue';
+    import SilentboxItem from './item.vue';
+    import SilentboxOverlay from './overlay.vue';
+    import ItemMixin from './../mixins/item';
 
     export default {
         name: 'SilentboxSingle',
+        mixins: [ ItemMixin ],
         props: {
             // Media source, it could be an image or a youtube video.
             'src': {
@@ -24,7 +29,15 @@
                 }
             },
             // Short description below image.
-            'description': String
+            'description': String,
+            'thumbnailWidth': {
+                type: String,
+                default: '200px'
+            },
+            'thumbnailHeight': {
+                type: String,
+                default: '150px'
+            }
         },
         data() {
             return {
@@ -36,19 +49,30 @@
                 }
             }
         },
-        components: {
-            'silentbox-overlay': overlay
-        },
         methods: {
+            /**
+             * Hide the Silenbotx overlay.
+             * 
+             * @return {void}
+             */
             closeSilentBoxOverlay() {
                 this.overlayVisibility = false;
             },
+            /**
+             * Open Silentbox with given media.
+             * 
+             * @return {void}
+             */
             openSilentBoxOverlay() {
                 if (this.src !== null) {
                     this.embedUrl = this.src;
                 }
                 this.overlayVisibility = true;
             }
+        },
+        components: {
+            SilentboxOverlay,
+            SilentboxItem
         },
         mounted() {
             this.$on('closeSilentboxOverlay', () => {

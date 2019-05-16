@@ -24,17 +24,26 @@
 </template>
 
 <script>
+    import VideoUrlDecoderMixin from './../mixins/videoUrlDecoder';
+
     export default {
         name: 'SilentboxOverlay',
+        mixins: [ VideoUrlDecoderMixin ],
         data() {
             return {
-                video: false
+                video: true
             }
         },
         computed: {
+            /**
+             * Get the right embed URL.
+             */
             getEmbedUrl() {
                 return this.handleUrl(this.$parent.embedUrl);
             },
+            /**
+             * Check whether overlay is visible or not.
+             */
             isVisible() {
                 if (this.$parent.overlayVisibility !== undefined && this.$parent.overlayVisibility !== false) {
                     return true;
@@ -44,63 +53,82 @@
             }
         },
         methods: {
+            /**
+             * Move to next item.
+             */
             moveToNextItem() {
                 this.$parent.nextItem();
             },
+            /**
+             * Move to previous item.
+             */
             moveToPreviousItem()
             {
                 this.$parent.prevItem();
             },
+            /**
+             * Hide silentbox overlay.
+             */
             closeSilentboxOverlay() {
                 this.$parent.$emit('closeSilentboxOverlay');
             },
+            /**
+             * Search for known video services URLs and return their players if recognized.
+             * Unrecognized URLs are handled as images.
+             * 
+             * @param  {string} url
+             * @return {string}
+             */
             handleUrl(url) {
-                if (url.includes('youtube.com')) {
-                    this.video = true;
+                if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    return this.getYoutubeVideo(url);
+                } else if (url.includes("vimeo")) {
+                    return this.getVimeoVideo(url);
+                } else {
+                    // Given url is not a video URL thus return it as it is.
+                    this.video = false;
+                    return url;
+                }
+            },
+            /**
+             * Get embed URL for youtube.com
+             * 
+             * @param  {string} url 
+             * @return {string} 
+             */
+            getYoutubeVideo(url) {
+                let videoUrl = "";
+                let videoId  = this.getYoutubeVideoId(url);
 
-                    let videoIdPosition  = url.indexOf('v=') + 2;
-                    let videoId = url.substring(videoIdPosition);
-
-                    let videoUrl = 'https://www.youtube.com/embed/' + videoId;
+                if (videoId) {
+                    videoUrl = 'https://www.youtube.com/embed/' + videoId;
 
                     if (this.$parent.autoplay) {
                         videoUrl += '?autoplay=1';
                     }
+                }
 
-                    return videoUrl;
-                } else if (url.includes('youtu.be')) {
-                    this.video = true;
-                    let videoUrl = "";
-                    const youtubeUrl = url.replace(/(>|<)/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-                    if (youtubeUrl[2] !== undefined) {
-                        const youtubeId = youtubeUrl[2].split(/[^0-9a-z_\-]/i);
-
-                        videoUrl = 'https://www.youtube.com/embed/' + youtubeId[0];
-
-                        if (this.$parent.autoplay) {
-                            videoUrl += '?autoplay=1';
-                        }
-                    }
-                    return videoUrl;
-
-                } else if (url.includes("vimeo")) {
-                    this.video = true;
+                return videoUrl;
+            },
+            /**
+             * Get embed URL for vimeo.com
+             * 
+             * @param  {string} url 
+             * @return {string} 
+             */
+            getVimeoVideo(url) {          
                     let videoUrl = "";
                     const vimoId = /(vimeo(pro)?\.com)\/(?:[^\d]+)?(\d+)\??(.*)?$/.exec(url)[3];
+
                     if (vimoId !== undefined) {
                         videoUrl = 'https://player.vimeo.com/video/'+ vimoId;
                         if (this.$parent.autoplay) {
                             videoUrl += '?autoplay=1';
                         }
                     }
+
                     return videoUrl;
-
-                } else {
-                    this.video = false;
-
-                    return url;
-                }
-            }
+            },
         },
         beforeUpdate() {
             let body = document.body;
