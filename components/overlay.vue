@@ -52,7 +52,27 @@
                 return false;
             }
         },
+        watch: {
+            isVisible: function (value) {
+                if (document !== undefined) {
+                    this.bodyScrolling();
+                }
+            }
+        },
         methods: {
+            bodyScrolling() {
+                let body = document.body;
+
+                // add class only if overlay should be visible
+                if (this.isVisible && ! body.classList.contains('silentbox-is-opened')) {
+                    return body.classList.add('silentbox-is-opened');
+                }
+
+                // remove class only if overlay should be hidden
+                if (! this.isVisible && body.classList.contains('silentbox-is-opened')) {
+                    return body.classList.remove('silentbox-is-opened')
+                }
+            },
             /**
              * Move to next item.
              */
@@ -131,19 +151,6 @@
 
                     return videoUrl;
             },
-        },
-        beforeUpdate() {
-            let body = document.body;
-
-            // add class only if overlay should be visible
-            if (this.isVisible && ! body.classList.contains('silentbox-is-opened')) {
-                return body.classList.add('silentbox-is-opened');
-            }
-
-            // remove class only if overlay should be hidden
-            if (! this.isVisible && body.classList.contains('silentbox-is-opened')) {
-                return body.classList.remove('silentbox-is-opened')
-            }
         }
     }
 </script>
@@ -175,6 +182,7 @@ $bg: #000;
 
     @include element(background) {
         background: rgba($bg, .75);
+        backdrop-filter: blur(20px);
         cursor: default;
         display: block;
         height: 100%;
