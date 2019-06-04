@@ -5,7 +5,7 @@
         <div id="silentbox-overlay__content" @click.stop="closeSilentboxOverlay">
             <div id="silentbox-overlay__embed">
                 <div id="silentbox-overlay__container">
-                    <iframe width="100%" height="100%" v-if="video" :src="getEmbedUrl" frameborder="0" allowfullscreen></iframe>
+                    <iframe width="100%" height="100%" v-if="video" :src="getEmbedUrl" frameborder="0" :allow="getAutoplayState" allowfullscreen></iframe>
                     <img width="auto" height="auto" :src="getEmbedUrl" v-if="! video">
                 </div>
                 <p id="silentbox-overlay__description" v-if="this.$parent.description">{{ this.$parent.description }}</p>
@@ -40,6 +40,15 @@
              */
             getEmbedUrl() {
                 return this.handleUrl(this.$parent.embedUrl);
+            },
+            /**
+             * Get autoplay state.
+             */
+            getAutoplayState() {
+                if (this.$parent.autoplay !== undefined && this.$parent.autoplay !== false) {
+                    return "autoplay";
+                }
+                 return "";
             },
             /**
              * Check whether overlay is visible or not.
@@ -123,10 +132,13 @@
                 let videoId  = this.getYoutubeVideoId(url);
 
                 if (videoId) {
-                    videoUrl = 'https://www.youtube.com/embed/' + videoId;
+                    videoUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0';
 
                     if (this.$parent.autoplay) {
-                        videoUrl += '?autoplay=1';
+                        videoUrl += '&amp;autoplay=1';
+                    }
+                    if (this.$parent.showControls) {
+                        videoUrl += '&amp;controls=0';
                     }
                 }
 
@@ -143,9 +155,9 @@
                     const vimoId = /(vimeo(pro)?\.com)\/(?:[^\d]+)?(\d+)\??(.*)?$/.exec(url)[3];
 
                     if (vimoId !== undefined) {
-                        videoUrl = 'https://player.vimeo.com/video/'+ vimoId;
+                        videoUrl = 'https://player.vimeo.com/video/'+ vimoId + '?api=1';
                         if (this.$parent.autoplay) {
-                            videoUrl += '?autoplay=1';
+                            videoUrl += '&autoplay=1';
                         }
                     }
 
