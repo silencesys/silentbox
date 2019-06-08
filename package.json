@@ -1,6 +1,6 @@
 {
   "name": "vue-silentbox",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A simple lightbox inspired Vue.js component.",
   "main": "dist/vue-silentbox.umd.js",
   "module": "dist/vue-silentbox.esm.js",
