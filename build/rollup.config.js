@@ -1,6 +1,7 @@
-import vue from 'rollup-plugin-vue';
-import commonjs from 'rollup-plugin-commonjs';
-import buble from 'rollup-plugin-buble';
+import vue from 'rollup-plugin-vue'
+import commonjs from 'rollup-plugin-commonjs'
+import resolve from 'rollup-plugin-node-resolve'
+import buble from 'rollup-plugin-buble'
 
 export default {
     input: 'index.js',
@@ -9,6 +10,7 @@ export default {
         exports: 'named'
     },
     plugins: [
+        resolve(),
         vue({
             css: true,
             compileTemplate: true

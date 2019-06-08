@@ -1,7 +1,7 @@
 var VideoUrlDecoderMixin = {
     methods: {
         getYoutubeVideoId: function getYoutubeVideoId(url) { 
-            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
             var match  = url.match(regExp);
 
             return (match !== undefined && match[7] !== undefined) ? match[7] : false;
@@ -948,14 +948,14 @@ __vue_render__$3._withStripped = true;
 
 var VueSilentbox = {};
 
-VueSilentbox.install = function (Vue, options) {
-    Vue.mixin({
-        components: {
-            'silentbox-single': single,
-            'silentbox-group':  group,
-            'silentbox-item':   item
-        },
-    });
+VueSilentbox.install = function(Vue, options) {
+  Vue.mixin({
+    components: {
+      'silentbox-single': single,
+      'silentbox-group': group,
+      'silentbox-item': item
+    }
+  });
 };
 
 export default VueSilentbox;
