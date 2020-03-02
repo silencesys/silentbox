@@ -1,18 +1,16 @@
-<img src="https://silentbox.silencesys.com/images/logo-02.png" alt="SilentBox a lightbox vue.js component"/>
+<img src="https://silentbox.silencesys.com/images/logo-02.png" alt="SilentBox 2.0 a lightbox vue.js component"/>
 
 <p align="center">
 <a href="https://github.com/silencesys/silentbox/stargazers"><img src="https://img.shields.io/github/stars/silencesys/silentbox.svg?color=08AEEA&labelColor=169DC1&style=flat-square" alt="Github Stars"></a> <a href="https://github.com/silencesys/silentbox/issues"><img src="https://img.shields.io/github/issues/silencesys/silentbox.svg?style=flat-square&labelColor=25ADA3&color=4CC1B8" alt="Github Issues"></a> <a href="https://github.com/silencesys/silentbox/blob/master/license.md"><img src="https://img.shields.io/github/license/silencesys/silentbox.svg?color=2AC47A&labelColor=389367&style=flat-square" alt="License"></a>
 </p>
 <br>
 <p align="center">
-A simple lightbox inspired component for Vue.js. If you're interested, see <a href="https://silentbox.silencesys.com">demo</a>.
+A second version of the lightweight lightbox inspired component for Vue.js with local video support and more comming. If you're interested, see <a href="https://silentbox.silencesys.com">demo</a>.
 </p>
 
 <br>
+
 <br>
-
-
-
 
 ## Installation
 ### Npm
@@ -30,32 +28,63 @@ Vue.use(VueSilentbox)
 <br>
 
 ## How to use?
-In the template you can use "single" silentbox instance
-```vue
-<silentbox-single src="" autoplay="true" description="">Single item</silentbox-single>
+Define an array of images in the data object of your Vue instance or component. 
+```js
+const app = new Vue({
+    el: '#application',
+    data: {
+        images: [
+            {
+                src: 'images/image001.jpg',
+                description: 'Sunken dreams II. by Arbebuk',
+            },
+            {
+                src: 'images/image002.jpg',
+                description: 'Tunnel View Sunrise by Porbital',
+            }
+        ]
+    },
+})
 ```
-or group instance which will make gallery.
-```vue
-<silentbox-group>
-    <silentbox-item src="" autoplay="true" description="My very custom message">Item one</silentbox-item>
-    <silentbox-item src="">Item two</silentbox-item>
-    <silentbox-item src=""></silentbox-item> <!-- Vimeo/Youtube preview or src will be used as thumbnail -->
-</silentbox-group>
-```
-Both `silentbox-item` and `silentbox-single` share the same attributes that could set. Furthermore, both
-elements accept viemo and youtube video links as source. If you don't specify the preview image, youtube or vimeo  
-thumbnail will be used instead.
 
-### Supported attributes 
+Then in the template you can use a `silent-box` component to display gallery.
+
+```vue
+<silent-box :gallery="images"><!-- your additional content --></silentbox-single>
+```
+or to show single image by just renaming the property.
+```vue
+<silent-box :image="images[0]"><!-- your additional content --></silentbox-single>
+```
+
+### Image object attributes 
+
+You can set following attributes to the image object to change the behaviour
+of the SilentBox or display additional information. On the other hand, if you're 
+lazy, only `src` attribute is required.
 
 | Attribute | required | type | Description |
 |:------| :------: | :------: |:------|
-| src | yes | string |media source, it could be an image or a youtube / Vimeo video |
+| src | yes | string | media source, it could be an image or a youtube / Vimeo video |
+| thumbnail | no | string | image used for thumbnail |
+| thumbnailHeight | no | string | height of the thumbnail in px |
+| thumbnailWidth | no | string | width of the thumbnail in px |
 | description | no | string | short description below image (doesn't work below videos yet) |
+| alt | no | string | alt description for images |
 | autoplay | no | bool| to autoplay youtube / Vimeo video |
-| thumbnail-height | no | string | height of the thumbnail in px |
-| thumbnail-width | no | string | width of the thumbnail in px |
-| hide-controls | no | bool | **works only for youtube videos**, setting true will hide video controls |
+| controls | no | bool | **works only for youtube videos**, setting false will hide video controls |
+
+### Supported services and formats
+- All image formats that can be displayed in browser 
+- Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv 
+- YouTube and Viemo embed videos with autoplay 
+
+<br>
+
+## Upgrading from 0.1?
+Version 2 brought many breaking changes. There are no more two separate components
+to display single image or gallery. So, change all your `silentbox-group` and `silentbox-single` components to `silent-box`.
+Source of images must be an array of objects or single object with previously mentioned attributes.
 
 <br>
 

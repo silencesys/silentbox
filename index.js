@@ -1,17 +1,13 @@
-import single from './components/single.vue'
-import group from './components/group.vue'
-import item from './components/item.vue'
+import gallery from './src/components/gallery.vue'
 
-const VueSilentbox = {};
+const VueSilentbox = {}
 
 VueSilentbox.install = function (Vue, options) {
-    Vue.mixin({
-        components: {
-            'silentbox-single': single,
-            'silentbox-group':  group,
-            'silentbox-item':   item
-        },
-    })
+  Vue.mixin({
+    components: {
+      'silent-box': gallery
+    }
+  })
 }
 
-export default VueSilentbox;
+export default VueSilentbox
