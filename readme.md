@@ -5,7 +5,7 @@
 </p>
 <br>
 <p align="center">
-A second version of the lightweight lightbox inspired component for Vue.js with local video support and more comming. If you're interested, see <a href="https://silentbox.silencesys.com">demo</a>.
+A second version of the lightweight lightbox inspired component for Vue.js with local video support and more features coming. If you're interested, see <a href="https://silentbox.silencesys.com">demo</a>.
 </p>
 
 <br>
@@ -47,25 +47,25 @@ const app = new Vue({
 })
 ```
 
-Then in the template you can use a `silent-box` component to display gallery.
+Then in the template you use a `silent-box` component to display the gallery.
 
 ```vue
 <silent-box :gallery="images"><!-- your additional content --></silentbox-single>
 ```
-or to show single image by just renaming the property.
+Or you can show a single image by just renaming the property.
 ```vue
 <silent-box :image="images[0]"><!-- your additional content --></silentbox-single>
 ```
 
 ### Image object attributes 
 
-You can set following attributes to the image object to change the behaviour
+You can set the following attributes to the image object to change the behaviour
 of the SilentBox or display additional information. On the other hand, if you're 
-lazy, only `src` attribute is required.
+lazy, only the `src` attribute is required.
 
 | Attribute | required | type | Description |
 |:------| :------: | :------: |:------|
-| src | yes | string | media source, it could be an image or a youtube / Vimeo video |
+| src | yes | string | media source, it could be an image, video or a YouTube / Vimeo embed link |
 | thumbnail | no | string | image used for thumbnail |
 | thumbnailHeight | no | string | height of the thumbnail in px |
 | thumbnailWidth | no | string | width of the thumbnail in px |
@@ -83,12 +83,12 @@ lazy, only `src` attribute is required.
 
 ## Upgrading from 0.1?
 Version 2 brought many breaking changes. There are no more two separate components
-to display single image or gallery. So, change all your `silentbox-group` and `silentbox-single` components to `silent-box`.
-Source of images must be an array of objects or single object with previously mentioned attributes.
+to display a single image or gallery. So, change all your `silentbox-group` and `silentbox-single` components to `silent-box`.
+The source of images must be an array of objects or a single object with previously mentioned attributes.
 
 <br>
 
 ## Contributions
 
-All contributions are welcomed, however give me some time to review your requests. Also please, use emoji in your commits, so it is easier to identify what your commits do. 
-There are several _emoji guides_ on internet. Please stick with mine which is inspired by Atom contributing guidelines, see [emoji in commits](https://gist.github.com/silencesys/2ede032fe31fed95434aff10d29cabbf).
+All contributions are welcomed, however give me some time to review your requests. Please, use emoji in your commits, so it is easier to identify what your commits do. 
+There are several _emoji guides_ on the internet. Please stick with mine which is inspired by Atom contributing guidelines, see [emoji in commits](https://gist.github.com/silencesys/2ede032fe31fed95434aff10d29cabbf).
