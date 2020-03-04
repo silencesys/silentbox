@@ -1,4 +1,4 @@
-<img src="https://silentbox.silencesys.com/images/logo-02.png" alt="SilentBox 2.0 a lightbox vue.js component"/>
+<img src="https://silentbox.silencesys.com/images/logo-v2.png" alt="SilentBox 2.0 a lightbox vue.js component"/>
 
 <p align="center">
 <a href="https://github.com/silencesys/silentbox/stargazers"><img src="https://img.shields.io/github/stars/silencesys/silentbox.svg?color=08AEEA&labelColor=169DC1&style=flat-square" alt="Github Stars"></a> <a href="https://github.com/silencesys/silentbox/issues"><img src="https://img.shields.io/github/issues/silencesys/silentbox.svg?style=flat-square&labelColor=25ADA3&color=4CC1B8" alt="Github Issues"></a> <a href="https://github.com/silencesys/silentbox/blob/master/license.md"><img src="https://img.shields.io/github/license/silencesys/silentbox.svg?color=2AC47A&labelColor=389367&style=flat-square" alt="License"></a> <img src="https://img.shields.io/github/workflow/status/silencesys/silentbox/Node.js CI?color=27EDA0&labelColor=25CE89&style=flat-square">
@@ -9,6 +9,13 @@ A second version of the lightweight lightbox inspired component for Vue.js with 
 </p>
 
 <br>
+
+<br>
+
+## Supported formats and services
+- All image formats that can be displayed in browser 
+- Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv 
+- YouTube and Viemo embed videos with autoplay 
 
 <br>
 
@@ -74,10 +81,14 @@ lazy, only the `src` attribute is required.
 | autoplay | no | bool| to autoplay youtube / Vimeo video |
 | controls | no | bool | **works only for youtube videos**, setting false will hide video controls |
 
-### Supported services and formats
-- All image formats that can be displayed in browser 
-- Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv 
-- YouTube and Viemo embed videos with autoplay 
+### Events
+SilentBox also fires several events that can be further used in your Vue.js application.
+| Event name | When is event fired |
+|:------| :------ | 
+| `silentbox-overlay-opened` | when the overlay is opened |
+| `silentbox-overlay-hidden` | when the overlay is closed (button or ESC key) |
+| `silentbox-overlay-next-item-displayed` | when the user moves to the next picture (arrow or key) |
+| `silentbox-overlay-previous-item-displayed` | when the user moves to the previous picture (arrow or key) | 
 
 <br>
 
