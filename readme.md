@@ -1,4 +1,6 @@
+<p align="center">
 <img src="https://silentbox.silencesys.com/images/silentbox-v2.png" alt="SilentBox 2.0 a lightbox vue.js component"/>
+</p>
 
 <p align="center">
 <a href="https://github.com/silencesys/silentbox/stargazers"><img src="https://img.shields.io/github/stars/silencesys/silentbox.svg?color=08AEEA&labelColor=169DC1&style=flat-square" alt="Github Stars"></a> <a href="https://github.com/silencesys/silentbox/issues"><img src="https://img.shields.io/github/issues/silencesys/silentbox.svg?style=flat-square&labelColor=25ADA3&color=4CC1B8" alt="Github Issues"></a> <a href="https://github.com/silencesys/silentbox/blob/master/license.md"><img src="https://img.shields.io/github/license/silencesys/silentbox.svg?color=2AC47A&labelColor=389367&style=flat-square" alt="License"></a> <img src="https://img.shields.io/github/workflow/status/silencesys/silentbox/Node.js CI?color=27EDA0&labelColor=25CE89&style=flat-square">
