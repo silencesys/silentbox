@@ -28,7 +28,8 @@ export default {
         const videoId = this.getYoutubeVideoId(src)
         return 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg'
       } else if (src.includes('vimeo.com')) {
-        const videoDetails = this.httpGet('https://vimeo.com/api/v2/video/54802209.json')
+        const videoId = this.getVimeoVideoId(src)
+        const videoDetails = this.httpGet('https://vimeo.com/api/v2/video/' + videoId + '.json')
         return videoDetails[0].thumbnail_medium
       } else {
         return src
