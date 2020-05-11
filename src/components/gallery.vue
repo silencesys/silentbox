@@ -89,12 +89,14 @@ export default {
           description: ''
         },
         visible: false,
-        currentItem: 0,
-        totalItems: this.gallery.length || 1
+        currentItem: 0
       }
     }
   },
   computed: {
+    totalItems() {
+      return this.gallery.length || 1
+    },
     galleryItems () {
       if (this.gallery.length > 0) {
         return this.gallery.map(item => {

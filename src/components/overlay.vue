@@ -89,7 +89,7 @@ export default {
     },
     totalItems: {
       type: Number,
-      defautl: 1
+      default: 1
     }
   },
   methods: {
