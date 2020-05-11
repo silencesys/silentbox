@@ -15,9 +15,9 @@ A second version of the lightweight lightbox inspired component for Vue.js with 
 <br>
 
 ## Supported formats and services
-- All image formats that can be displayed in browser 
-- Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv 
-- YouTube and Viemo embed videos with autoplay 
+- All image formats that can be displayed in browser
+- Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv
+- YouTube and Viemo embed videos with autoplay
 
 <br>
 
@@ -37,7 +37,7 @@ Vue.use(VueSilentbox)
 <br>
 
 ## How to use?
-Define an array of images in the data object of your Vue instance or component. 
+Define an array of images in the data object of your Vue instance or component.
 ```js
 const app = new Vue({
     el: '#application',
@@ -59,17 +59,17 @@ const app = new Vue({
 Then in the template you use a `silent-box` component to display the gallery.
 
 ```vue
-<silent-box :gallery="images"><!-- your additional content --></silentbox-single>
+<silent-box :gallery="images"><!-- your additional content --></silent-box>
 ```
 Or you can show a single image by just renaming the property.
 ```vue
-<silent-box :image="images[0]"><!-- your additional content --></silentbox-single>
+<silent-box :image="images[0]"><!-- your additional content --></silent-box>
 ```
 
-### Image object attributes 
+### Image object attributes
 
 You can set the following attributes to the image object to change the behaviour
-of the SilentBox or display additional information. On the other hand, if you're 
+of the SilentBox or display additional information. On the other hand, if you're
 lazy, only the `src` attribute is required.
 
 | Attribute | required | type | Description |
@@ -86,11 +86,11 @@ lazy, only the `src` attribute is required.
 ### Events
 SilentBox also fires several events that can be further used in your Vue.js application.
 | Event name | When is event fired |
-|:------| :------ | 
+|:------| :------ |
 | `silentbox-overlay-opened` | when the overlay is opened |
 | `silentbox-overlay-hidden` | when the overlay is closed (button or ESC key) |
 | `silentbox-overlay-next-item-displayed` | when the user moves to the next picture (arrow or key) |
-| `silentbox-overlay-previous-item-displayed` | when the user moves to the previous picture (arrow or key) | 
+| `silentbox-overlay-previous-item-displayed` | when the user moves to the previous picture (arrow or key) |
 
 <br>
 
@@ -103,5 +103,5 @@ The source of images must be an array of objects or a single object with previou
 
 ## Contributions
 
-All contributions are welcomed, however give me some time to review your requests. Please, use emoji in your commits, so it is easier to identify what your commits do. 
+All contributions are welcomed, however give me some time to review your requests. Please, use emoji in your commits, so it is easier to identify what your commits do.
 There are several _emoji guides_ on the internet. Please stick with mine which is inspired by Atom contributing guidelines, see [emoji in commits](https://gist.github.com/silencesys/2ede032fe31fed95434aff10d29cabbf).
