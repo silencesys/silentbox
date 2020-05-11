@@ -94,7 +94,7 @@ export default {
     }
   },
   computed: {
-    totalItems() {
+    totalItems () {
       return this.gallery.length || 1
     },
     galleryItems () {
