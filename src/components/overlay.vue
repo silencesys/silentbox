@@ -150,7 +150,7 @@ export default {
       const videoId = this.getYoutubeVideoId(url)
 
       if (videoId) {
-        videoUrl = 'http://www.youtube.com/embed/' + videoId + '?rel=0'
+        videoUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0'
 
         if (this.overlayItem.autoplay === 'autoplay') {
           videoUrl += '&autoplay=1'
