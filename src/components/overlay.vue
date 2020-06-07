@@ -150,7 +150,7 @@ export default {
       const videoId = this.getYoutubeVideoId(url)
 
       if (videoId) {
-        videoUrl = 'https://www.youtube.com/embed/' + videoId + '?rel=0'
+        videoUrl = `${location.protocol}//www.youtube.com/embed/${videoId}?rel=0`
 
         if (this.overlayItem.autoplay === 'autoplay') {
           videoUrl += '&autoplay=1'
@@ -173,7 +173,7 @@ export default {
       const vimoId = /(vimeo(pro)?\.com)\/(?:[^\d]+)?(\d+)\??(.*)?$/.exec(url)[3]
 
       if (vimoId !== undefined) {
-        videoUrl = 'https://player.vimeo.com/video/' + vimoId + '?rel=0'
+        videoUrl = `${location.protocol}//player.vimeo.com/video/${vimoId}?rel=0`
         if (this.overlayItem.autoplay === 'autoplay') {
           videoUrl += '&autoplay=1'
         }

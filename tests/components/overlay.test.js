@@ -47,9 +47,9 @@ describe('components/Overlay.vue', () => {
           }
         }
       })
-      const url = overlay.vm.parseYoutubeVideo('https://www.youtube.com/watch?v=HSsqzzuGTPo')
+      const url = overlay.vm.parseYoutubeVideo(`${location.protocol}//www.youtube.com/watch?v=HSsqzzuGTPo`)
 
-      expect(url).toEqual('https://www.youtube.com/embed/HSsqzzuGTPo?rel=0')
+      expect(url).toEqual(`${location.protocol}//www.youtube.com/embed/HSsqzzuGTPo?rel=0`)
     })
     test('to return parsed YouTube URL with autoplay', () => {
       const overlay = shallowMount(Overlay, {
@@ -60,9 +60,9 @@ describe('components/Overlay.vue', () => {
           }
         }
       })
-      const url = overlay.vm.parseYoutubeVideo('https://www.youtube.com/watch?v=HSsqzzuGTPo')
+      const url = overlay.vm.parseYoutubeVideo(`${location.protocol}//www.youtube.com/watch?v=HSsqzzuGTPo`)
 
-      expect(url).toEqual('https://www.youtube.com/embed/HSsqzzuGTPo?rel=0&autoplay=1')
+      expect(url).toEqual(`${location.protocol}//www.youtube.com/embed/HSsqzzuGTPo?rel=0&autoplay=1`)
     })
     test('to return parsed YouTube URL without controls', () => {
       const overlay = shallowMount(Overlay, {
@@ -73,9 +73,9 @@ describe('components/Overlay.vue', () => {
           }
         }
       })
-      const url = overlay.vm.parseYoutubeVideo('https://www.youtube.com/watch?v=HSsqzzuGTPo')
+      const url = overlay.vm.parseYoutubeVideo(`${location.protocol}//www.youtube.com/watch?v=HSsqzzuGTPo`)
 
-      expect(url).toEqual('https://www.youtube.com/embed/HSsqzzuGTPo?rel=0&controls=0')
+      expect(url).toEqual(`${location.protocol}//www.youtube.com/embed/HSsqzzuGTPo?rel=0&controls=0`)
     })
   })
 
@@ -89,9 +89,9 @@ describe('components/Overlay.vue', () => {
           }
         }
       })
-      const url = overlay.vm.parseVimeoVideo('https://vimeo.com/336812660')
+      const url = overlay.vm.parseVimeoVideo(`${location.protocol}//vimeo.com/336812660`)
 
-      expect(url).toEqual('https://player.vimeo.com/video/336812660?rel=0')
+      expect(url).toEqual(`${location.protocol}//player.vimeo.com/video/336812660?rel=0`)
     })
     test('to return parsed Vimeo URL with autoplay', () => {
       const overlay = shallowMount(Overlay, {
@@ -102,9 +102,9 @@ describe('components/Overlay.vue', () => {
           }
         }
       })
-      const url = overlay.vm.parseVimeoVideo('https://vimeo.com/336812660')
+      const url = overlay.vm.parseVimeoVideo(`${location.protocol}//vimeo.com/336812660`)
 
-      expect(url).toEqual('https://player.vimeo.com/video/336812660?rel=0&autoplay=1')
+      expect(url).toEqual(`${location.protocol}//player.vimeo.com/video/336812660?rel=0&autoplay=1`)
     })
   })
 })

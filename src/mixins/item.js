@@ -26,10 +26,10 @@ export default {
     getThumbnail (src) {
       if (src.includes('youtube.com') || src.includes('youtu.be')) {
         const videoId = this.getYoutubeVideoId(src)
-        return 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg'
+        return `${location.protocol}//img.youtube.com/vi/${videoId}/hqdefault.jpg`
       } else if (src.includes('vimeo.com')) {
         const videoId = this.getVimeoVideoId(src)
-        const videoDetails = this.httpGet('https://vimeo.com/api/v2/video/' + videoId + '.json')
+        const videoDetails = this.httpGet(`${location.protocol}//vimeo.com/api/v2/video/${videoId}.json`)
         return videoDetails[0].thumbnail_medium
       } else {
         return src

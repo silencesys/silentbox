@@ -3,19 +3,19 @@ import itemMixin from './../../src/mixins/item'
 describe('mixins/item', () => {
   describe('methods:isEmbedVideo', () => {
     test('it shuld return true when youtube.com link is passed', () => {
-      const mixin = itemMixin.methods.isEmbedVideo('https://www.youtube.com/watch?v=HSsqzzuGTPo')
+      const mixin = itemMixin.methods.isEmbedVideo(`${location.protocol}//www.youtube.com/watch?v=HSsqzzuGTPo`)
       expect(mixin).toBeTruthy()
     })
     test('it shuld return true when youtu.be link is passed', () => {
-      const mixin = itemMixin.methods.isEmbedVideo('https://www.youtu.be/watch?v=HSsqzzuGTPo')
+      const mixin = itemMixin.methods.isEmbedVideo(`${location.protocol}//www.youtu.be/watch?v=HSsqzzuGTPo`)
       expect(mixin).toBeTruthy()
     })
     test('it shuld return true when vimeo link is passed', () => {
-      const mixin = itemMixin.methods.isEmbedVideo('https://vimeo.com/336812660')
+      const mixin = itemMixin.methods.isEmbedVideo(`${location.protocol}//vimeo.com/336812660`)
       expect(mixin).toBeTruthy()
     })
     test('it shuld return false when unsupported link is passed', () => {
-      const mixin = itemMixin.methods.isEmbedVideo('https://localhost')
+      const mixin = itemMixin.methods.isEmbedVideo(`${location.protocol}//localhost`)
       expect(mixin).toBeFalsy()
     })
   })
