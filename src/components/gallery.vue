@@ -7,12 +7,17 @@
       @click="openOverlay(image, index)"
       class="silentbox-item"
     >
-      <img
-        :src="image.thumbnail"
-        :alt="image.alt"
-        :width="image.thumbnailWidth"
-        :height="image.thumbnailHeight"
+      <slot
+          name="silentbox-item"
+          v-bind:silentboxItem="image"
       >
+        <img
+          :src="image.thumbnail"
+          :alt="image.alt"
+          :width="image.thumbnailWidth"
+          :height="image.thumbnailHeight"
+        >
+      </slot>
     </div>
     <silentbox-overlay
       :overlay-item="overlay.item"

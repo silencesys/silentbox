@@ -66,6 +66,27 @@ Or you can show a single image by just renaming the property.
 <silent-box :image="images[0]"><!-- your additional content --></silent-box>
 ```
 
+## Custom activators
+
+In case you don't like the default image previews that SilentBox provides, you can
+set your own activators - text, button or even a video! SilentBox provides a named slot for this - `silentbox-item`. The slot provides variable called `silentboxItem` which
+provides you access to all properties you set on image object.
+
+```html
+<!--
+In this example only alt text is displayed as an activator.
+-->
+<silent-box :gallery="images">
+    <h2 class="tw-text-3xl tw-font-bold tw-mb-2">Gallery</h2>
+    <p class="tw-font-light tw-mb-3">
+        Items could be merged into groups that make galleries.
+    </p>
+    <template v-slot:silentbox-item="{ silentboxItem }">
+        <p>{{ silentboxItem.alt  }}</p>
+    </template>
+</silent-box>
+```
+
 ### Image object attributes
 
 You can set the following attributes to the image object to change the behaviour
