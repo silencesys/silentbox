@@ -17,7 +17,7 @@ describe('components/Gallery.vue', () => {
           src: 'image.jpg',
           thumbnail: 'image.jpg',
           thumbnailHeight: 'auto',
-          thumbnailWidth: '200px',
+          thumbnailWidth: 'auto',
           description: 'This is my amazing image!'
         }
       ]
@@ -43,7 +43,7 @@ describe('components/Gallery.vue', () => {
           src: 'image.jpg',
           thumbnail: 'image.jpg',
           thumbnailHeight: 'auto',
-          thumbnailWidth: '200px',
+          thumbnailWidth: 'auto',
           description: 'This is my amazing image!'
         }, {
           alt: '',
@@ -52,7 +52,7 @@ describe('components/Gallery.vue', () => {
           src: 'image2.jpg',
           thumbnail: 'image2-thumb.jpg',
           thumbnailHeight: 'auto',
-          thumbnailWidth: '200px',
+          thumbnailWidth: 'auto',
           description: ''
         }
       ]
@@ -90,7 +90,7 @@ describe('components/Gallery.vue', () => {
         src: 'image.jpg',
         thumbnail: 'image.jpg',
         thumbnailHeight: 'auto',
-        thumbnailWidth: '200px',
+        thumbnailWidth: 'auto',
         description: 'This is my amazing image!'
       }
 
@@ -108,7 +108,7 @@ describe('components/Gallery.vue', () => {
         src: 'image.jpg',
         thumbnail: 'image.jpg',
         thumbnailHeight: 'auto',
-        thumbnailWidth: '200px',
+        thumbnailWidth: 'auto',
         description: 'This is my amazing image!'
       }
 
@@ -128,7 +128,7 @@ describe('components/Gallery.vue', () => {
         src: 'image.jpg',
         thumbnail: 'image.jpg',
         thumbnailHeight: 'auto',
-        thumbnailWidth: '200px',
+        thumbnailWidth: 'auto',
         description: 'This is my amazing image!'
       }
 
@@ -146,7 +146,7 @@ describe('components/Gallery.vue', () => {
         src: 'image.jpg',
         thumbnail: 'image.jpg',
         thumbnailHeight: 'auto',
-        thumbnailWidth: '200px',
+        thumbnailWidth: 'auto',
         description: 'This is my amazing image!'
       }
 
