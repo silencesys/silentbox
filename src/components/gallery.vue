@@ -17,7 +17,7 @@
     <silentbox-overlay
       :overlay-item="overlay.item"
       :visible="overlay.visible"
-      :total-items="overlay.totalItems"
+      :total-items="totalItems"
       @closeSilentboxOverlay="hideOverlay"
       @requestNextSilentBoxItem="showNextItem"
       @requestPreviousSilentBoxItem="showPreviousItem"
