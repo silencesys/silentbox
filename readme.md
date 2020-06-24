@@ -66,7 +66,7 @@ Or you can show a single image by just renaming the property.
 <silent-box :image="images[0]"><!-- your additional content --></silent-box>
 ```
 
-## Custom activators
+### Custom activators
 
 In case you don't like the default image previews that SilentBox provides, you can
 set your own activators - text, button or even a video! SilentBox provides a named slot for this - `silentbox-item`. The slot provides variable called `silentboxItem` which
