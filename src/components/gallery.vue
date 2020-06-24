@@ -45,7 +45,7 @@ export default {
         return {
           src: '',
           alt: '',
-          thumbnailWidth: '200px',
+          thumbnailWidth: 'auto',
           thumbnailHeight: 'auto',
           thumbnail: '',
           autoplay: false,
@@ -81,7 +81,7 @@ export default {
         item: {
           src: '',
           alt: '',
-          thumbnailWidth: '200px',
+          thumbnailWidth: 'auto',
           thumbnailHeight: 'auto',
           thumbnail: '',
           autoplay: false,
