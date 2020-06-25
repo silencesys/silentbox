@@ -137,7 +137,7 @@ export default {
      * Registers the finger position on website so we can later calculate users
      * swipe direction.
      */
-    touchStart(event) {
+    touchStart (event) {
       const { clientX: x, clientY: y } = event.touches[0]
       this.touchHandling.posX = x
       this.touchHandling.posY = y
