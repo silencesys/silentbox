@@ -1,42 +1,53 @@
 <template>
-  <div id="silentbox-overlay" v-if="visible">
+  <div
+    id="silentbox-overlay"
+    v-if="visible"
+    @touchstart="touchStart"
+    @touchmove="touchMove"
+  >
     <div id="silentbox-overlay__background" />
 
-    <div id="silentbox-overlay__content" @click.stop="closeSilentboxOverlay">
-      <div id="silentbox-overlay__embed">
-        <div id="silentbox-overlay__container">
-          <!-- embed video rendering -->
-          <iframe
-            v-if="isEmbedVideo(overlayItem.src)"
-            :allow="['accelerometer;', overlayItem.autoplay + ';', 'encrypted-media;', 'gyroscope;', 'picture-in-picture']"
-            :src="handleUrl(overlayItem.src)"
-            frameborder="0"
-            width="100%"
-            height="100%"
-            allowfullscreen
-          />
-          <!-- local video rendering -->
-          <div
-            v-else-if="isLocalVideo(overlayItem.src)"
-            class="silentbox-video__frame"
-          >
-            <video
-              :src="overlayItem.src"
-              :autoplay="overlayItem.autoplay"
-              controls
-              class="silentbox-video__embed"
+    <transition :name="animationName" mode="out-in">
+      <div
+        id="silentbox-overlay__content"
+        @click.stop="closeSilentboxOverlay"
+        :key="overlayItem.src"
+      >
+        <div id="silentbox-overlay__embed">
+          <div id="silentbox-overlay__container">
+            <!-- embed video rendering -->
+            <iframe
+              v-if="isEmbedVideo(overlayItem.src)"
+              :allow="['accelerometer;', overlayItem.autoplay + ';', 'encrypted-media;', 'gyroscope;', 'picture-in-picture']"
+              :src="handleUrl(overlayItem.src)"
+              frameborder="0"
+              width="100%"
+              height="100%"
+              allowfullscreen
             />
+            <!-- local video rendering -->
+            <div
+              v-else-if="isLocalVideo(overlayItem.src)"
+              class="silentbox-video__frame"
+            >
+              <video
+                :src="overlayItem.src"
+                :autoplay="overlayItem.autoplay"
+                controls
+                class="silentbox-video__embed"
+              />
+            </div>
+            <!-- local/embed image rendering -->
+            <img v-else :src="overlayItem.src" :alt="overlayItem.alt" width="auto" height="auto" >
           </div>
-          <!-- local/embed image rendering -->
-          <img v-else :src="overlayItem.src" :alt="overlayItem.alt" width="auto" height="auto" >
+          <p
+            id="silentbox-overlay__description"
+            v-if="overlayItem.description">
+              {{ overlayItem.description }}
+          </p>
         </div>
-        <p
-          id="silentbox-overlay__description"
-          v-if="overlayItem.description">
-            {{ overlayItem.description }}
-        </p>
       </div>
-    </div>
+    </transition>
 
     <div
       id="silentbox-overlay__close-button"
@@ -92,36 +103,118 @@ export default {
       default: 1
     }
   },
-  methods: {
-    bodyScrolling () {
-      const body = document.body
+  data () {
+    return {
+      touchHandling: {
+        posX: 0,
+        posY: 0
+      },
+      animationName: 'silentbox-animation__swipe-left'
+    }
+  },
+  created () {
+    // Listen to key events.
+    window.addEventListener('keyup', (event) => {
+      // Escape: 27
+      if (event.which === 27) {
+        this.closeSilentboxOverlay()
+      }
+      // Right arrow: 39
+      if (event.which === 39) {
+        this.moveToNextItem()
+      }
+      // Left arrow: 37
+      if (event.which === 37) {
+        this.moveToPreviousItem()
+      }
+    })
 
-      // add class only if overlay should be visible
-      if (this.isVisible && !body.classList.contains('silentbox-is-opened')) {
-        return body.classList.add('silentbox-is-opened')
+    // Disable browser scrolling.
+    this.enableScrollLock()
+  },
+  methods: {
+    /**
+     * Registers the finger position on website so we can later calculate users
+     * swipe direction.
+     */
+    touchStart(event) {
+      const { clientX: x, clientY: y } = event.touches[0]
+      this.touchHandling.posX = x
+      this.touchHandling.posY = y
+    },
+    /**
+     * Handles touch movement events, at the moment only swipe left and right
+     * are supported, but later could be extended with up and down swipes.
+     * It should be good to implement some kind of minimal swipe lenght support.
+     */
+    touchMove (event) {
+      const { clientX: x, clientY: y } = event.touches[0]
+      const { posX, posY } = this.touchHandling
+
+      if (posX === 0 || posY === 0) {
+        return
       }
 
-      // remove class only if overlay should be hidden
-      if (!this.isVisible && body.classList.contains('silentbox-is-opened')) {
-        return body.classList.remove('silentbox-is-opened')
+      const xDiff = posX - x
+      const yDiff = posY - y
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+          // left
+          this.moveToNextItem()
+        } else {
+          // right
+          this.moveToPreviousItem()
+        }
+      } else {
+        if (yDiff > 0) {
+          // up
+        } else {
+          // down
+          // this.closeSilentboxOverlay()
+        }
+      }
+
+      // reset
+      this.touchHandling.posX = 0
+      this.touchHandling.posY = 0
+    },
+    /**
+     * This method enables browser scrolling lock which prevent from horizontal
+     * and vertical scrolling. This makes touch navigation less confusing.
+     */
+    enableScrollLock () {
+      if (!document.body.classList.contains('silentbox-is-opened')) {
+        return document.body.classList.add('silentbox-is-opened')
+      }
+    },
+    /**
+     * This method removes browser scrolling lock.
+     */
+    removeScrollLock () {
+      if (document.body.classList.contains('silentbox-is-opened')) {
+        return document.body.classList.remove('silentbox-is-opened')
       }
     },
     /**
      * Move to next item.
      */
     moveToNextItem () {
+      this.animationName = 'silentbox-animation__swipe-left'
       this.$emit('requestNextSilentBoxItem')
     },
     /**
      * Move to previous item.
      */
     moveToPreviousItem () {
+      this.animationName = 'silentbox-animation__swipe-right'
       this.$emit('requestPreviousSilentBoxItem')
     },
     /**
      * Hide silentbox overlay.
      */
     closeSilentboxOverlay () {
+      this.removeScrollLock()
       this.$emit('closeSilentboxOverlay')
     },
     /**
@@ -384,6 +477,45 @@ $bg: #000;
         outline: none
       }
     }
+}
+
+.silentbox-animation__swipe-left-enter-active {
+  transition: all .3s ease;
+  opacity: 0;
+  transform: translateX(25vw);
+}
+.silentbox-animation__swipe-left-leave-active {
+  transition: all .3s ease;
+  transition: opacity .5s;
+}
+.silentbox-animation__swipe-left-enter-to {
+  opacity: 1;
+  transition: all .3s ease;
+  transform: translateX(0);
+}
+.silentbox-animation__swipe-left-leave-to {
+  opacity: 0;
+  transition: all .3s ease;
+  transform: translateX(-25vw);
+}
+.silentbox-animation__swipe-right-enter-active {
+  transition: all .3s ease;
+  opacity: 0;
+  transform: translateX(-25vw);
+}
+.silentbox-animation__swipe-right-leave-active {
+  transition: all .3s ease;
+  transition: opacity .5s;
+}
+.silentbox-animation__swipe-right-enter-to {
+  opacity: 1;
+  transition: all .3s ease;
+  transform: translateX(0);
+}
+.silentbox-animation__swipe-right-leave-to {
+  opacity: 0;
+  transition: all .3s ease;
+  transform: translateX(25vw);
 }
 
 // Animations

@@ -20,6 +20,7 @@
       </slot>
     </div>
     <silentbox-overlay
+      v-if="overlay.visible"
       :overlay-item="overlay.item"
       :visible="overlay.visible"
       :total-items="totalItems"
@@ -62,23 +63,6 @@ export default {
   },
   components: {
     'silentbox-overlay': overlay
-  },
-  mounted () {
-    // Listen to key events.
-    window.addEventListener('keyup', (event) => {
-      // Escape: 27
-      if (event.which === 27) {
-        this.hideOverlay()
-      }
-      // Right arrow: 39
-      if (event.which === 39) {
-        this.showNextItem()
-      }
-      // Left arrow: 37
-      if (event.which === 37) {
-        this.showPreviousItem()
-      }
-    })
   },
   data () {
     return {
