@@ -1,24 +1,26 @@
 <template>
   <section id="silentbox-gallery">
     <slot />
-    <div
-      v-for="(image, index) in galleryItems"
-      :key="image.src"
-      @click="openOverlay(image, index)"
-      class="silentbox-item"
-    >
-      <slot
-          name="silentbox-item"
-          v-bind:silentboxItem="image"
+    <slot name="gallery-wrapper" :galleryItems="galleryItems" :open-overlay="openOverlay">
+      <div
+        v-for="(image, index) in galleryItems"
+        :key="image.src"
+        @click="openOverlay(image, index)"
+        class="silentbox-item"
       >
-        <img
-          :src="image.thumbnail"
-          :alt="image.alt"
-          :width="image.thumbnailWidth"
-          :height="image.thumbnailHeight"
+        <slot
+            name="silentbox-item"
+            v-bind:silentboxItem="image"
         >
-      </slot>
-    </div>
+          <img
+            :src="image.thumbnail"
+            :alt="image.alt"
+            :width="image.thumbnailWidth"
+            :height="image.thumbnailHeight"
+          >
+        </slot>
+      </div>
+    </slot>
     <silentbox-overlay
       v-if="overlay.visible"
       :overlay-item="overlay.item"
