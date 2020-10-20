@@ -20,14 +20,24 @@
     "Vue",
     "Silentbox",
     "Lightbox",
-    "Fancybox"
+    "Fancybox",
+    "Vuejs",
+    "Vue component",
+    "Vue 2",
+    "Gallery",
+    "Image viewer",
+    "Image slider",
+    "Images",
+    "Galleries",
+    "Fancybox-gallery",
+    "Lightbox-gallery"
   ],
-  "author": "Martin Rocek",
+  "author": "Martin Roček",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/silencesys/silentbox/issues"
   },
-  "homepage": "https://github.com/silencesys/silentbox#readme",
+  "homepage": "https://silentbox.silencesys.com/",
   "jest": {
     "moduleFileExtensions": [
       "js",

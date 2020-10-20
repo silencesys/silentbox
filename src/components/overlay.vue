@@ -355,7 +355,7 @@ $bg: #000;
     @include element(container) {
         cursor: default;
         height: 100%;
-        margin: 0 0 1.5rem 0;
+        margin: 0;
         position: relative;
         text-align: center;
         width: 100%;
@@ -384,6 +384,10 @@ $bg: #000;
             background-color: rgba($bg, .5);
             outline: none;
         }
+        @media (max-width: 1024px) {
+          height: 5.75rem;
+          width: 5.75rem;
+        }
 
         .icon {
             color: $main;
@@ -396,6 +400,11 @@ $bg: #000;
             top: -.5rem;
             transition: 250ms ease;
             width: 1rem;
+            @media (max-width: 1024px) {
+              height: 2.5rem;
+              width: 2.5rem;
+              left: -1rem;
+            }
             &:before,
             &:after {
                 background: $main;
@@ -479,6 +488,7 @@ $bg: #000;
     }
 }
 
+// Transitions
 .silentbox-animation__swipe-left-enter-active {
   transition: all .3s ease;
   opacity: 0;

@@ -17,7 +17,7 @@ A second version of the lightweight lightbox inspired component for Vue.js with 
 ## Supported formats and services
 - All image formats that can be displayed in browser
 - Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv
-- YouTube and Viemo embed videos with autoplay
+- YouTube and Vimeo embed videos with autoplay
 
 <br>
 
