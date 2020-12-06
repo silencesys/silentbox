@@ -38,7 +38,7 @@
               />
             </div>
             <!-- local/embed image rendering -->
-            <img v-else :srcSet="overlayItem.srcSet ? overlayItem.srcSet : overlayItem.src" :src="overlayItem.src" :alt="overlayItem.alt" width="auto" height="auto" >
+            <img v-else :srcset="overlayItem.srcSet ? overlayItem.srcSet : overlayItem.src" :src="overlayItem.src" :alt="overlayItem.alt" width="auto" height="auto" >
           </div>
           <p
             id="silentbox-overlay__description"
