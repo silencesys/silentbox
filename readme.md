@@ -45,10 +45,12 @@ const app = new Vue({
         images: [
             {
                 src: 'images/image001.jpg',
+                srcSet: '/images/image001-640.jpg 640w,/images/image001-1280.jpg 1280w,/images/image001-1920.jpg 1920w',
                 description: 'Sunken dreams II. by Arbebuk',
             },
             {
                 src: 'images/image002.jpg',
+                srcSet: '/images/image002-640.jpg 640w,/images/image002-1280.jpg 1280w,/images/image003-1920.jpg 1920w',
                 description: 'Tunnel View Sunrise by Porbital',
             }
         ]
@@ -65,6 +67,7 @@ Or you can show a single image by just renaming the property.
 ```vue
 <silent-box :image="images[0]"><!-- your additional content --></silent-box>
 ```
+
 
 ### Custom activators
 
@@ -96,6 +99,7 @@ lazy, only the `src` attribute is required.
 | Attribute | required | type | Description |
 |:------| :------: | :------: |:------|
 | src | yes | string | media source, it could be an image, video or a YouTube / Vimeo embed link |
+| srcSet | no | string | srcSet to make use of [responsive images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) |
 | thumbnail | no | string | image used for thumbnail |
 | thumbnailHeight | no | string | height of the thumbnail in px |
 | thumbnailWidth | no | string | width of the thumbnail in px |
