@@ -12,6 +12,7 @@
           v-bind:silentboxItem="image"
       >
         <img
+          :loading="(this.lazyLoading)? 'lazy' : 'eager'"
           :src="image.thumbnail"
           :alt="image.alt"
           :width="image.thumbnailWidth"
@@ -39,6 +40,12 @@ export default {
   name: 'silentboxGallery',
   mixins: [itemMixin],
   props: {
+    lazyLoading: {
+      type: Boolean,
+      default: () => {
+        return true
+      }
+    },
     gallery: {
       type: Array,
       default: () => {
