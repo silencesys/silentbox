@@ -12,7 +12,7 @@
           v-bind:silentboxItem="image"
       >
         <img
-          :loading="(this.lazyLoading)? 'lazy' : 'eager'"
+          :loading="(lazyLoading)? 'lazy' : 'eager'"
           :src="image.thumbnail"
           :alt="image.alt"
           :width="image.thumbnailWidth"
