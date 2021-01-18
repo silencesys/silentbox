@@ -108,6 +108,17 @@ lazy, only the `src` attribute is required.
 | autoplay | no | bool| to autoplay youtube / Vimeo video |
 | controls | no | bool | **works only for youtube videos**, setting false will hide video controls |
 
+### Gallery element attributes
+
+These attributes can change the gallery element behaviour.
+
+| Attribute | required | type | Description |
+|:------| :------: | :------: |:------|
+| gallery | no | array | list of image objects that will be displayed in the gallery |
+| image | no | object | image object that will be displayed in the gallery |
+| lazy-loading | no | bool | whether images should be lazy loaded |
+| preview-count | no | number | number of images that should be displayed in the gallery |
+
 ### Events
 SilentBox also fires several events that can be further used in your Vue.js application.
 | Event name | When is event fired |
