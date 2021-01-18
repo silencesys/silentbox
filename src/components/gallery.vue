@@ -2,7 +2,7 @@
   <section id="silentbox-gallery">
     <slot />
     <div
-      v-for="(image, index) in galleryItems"
+      v-for="(image, index) in previewGallery"
       :key="image.src"
       @click="openOverlay(image, index)"
       class="silentbox-item"
@@ -12,6 +12,7 @@
           v-bind:silentboxItem="image"
       >
         <img
+          :loading="(lazyLoading)? 'lazy' : 'eager'"
           :src="image.thumbnail"
           :alt="image.alt"
           :width="image.thumbnailWidth"
@@ -39,6 +40,16 @@ export default {
   name: 'silentboxGallery',
   mixins: [itemMixin],
   props: {
+    lazyLoading: {
+      type: Boolean,
+      default: () => {
+        return true
+      }
+    },
+    previewCount: {
+      type: Number,
+      default: null
+    },
     gallery: {
       type: Array,
       default: () => {
@@ -86,6 +97,19 @@ export default {
     totalItems () {
       return this.gallery.length || 1
     },
+    previewGallery () {
+      if (Number.isInteger(this.previewCount)) {
+        return this.gallery.slice(0, this.previewCount).map(item => {
+          return {
+            ...this.overlay.item,
+            ...item,
+            thumbnail: this.setThumbnail(item),
+            autoplay: this.setAutoplay(item)
+          }
+        })
+      }
+      return this.galleryItems
+    },
     galleryItems () {
       if (this.gallery.length > 0) {
         return this.gallery.map(item => {
@@ -96,13 +120,12 @@ export default {
             autoplay: this.setAutoplay(item)
           }
         })
-      } else {
-        return [{
-          ...this.overlay.item,
-          ...this.image,
-          thumbnail: this.setThumbnail(this.image)
-        }]
       }
+      return [{
+        ...this.overlay.item,
+        ...this.image,
+        thumbnail: this.setThumbnail(this.image)
+      }]
     }
   },
   methods: {
