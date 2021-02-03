@@ -724,16 +724,20 @@
 
     },
     methods: {
-      openOverlay(image, index) {
+      openOverlay(image, index = 0) {
         this.overlay.visible = true;
         this.overlay.item = image;
         this.overlay.currentItem = index;
-        this.$emit('silentbox-overlay-opened');
+        this.$emit('silentbox-overlay-opened', {
+          item: image
+        });
       },
 
       hideOverlay() {
         this.overlay.visible = false;
-        this.$emit('silentbox-overlay-hidden');
+        this.$emit('silentbox-overlay-hidden', {
+          item: this.overlay.item
+        });
       },
 
       showNextItem() {
@@ -741,7 +745,9 @@
         newItemIndex = newItemIndex <= this.galleryItems.length - 1 ? newItemIndex : 0;
         this.overlay.item = this.galleryItems[newItemIndex];
         this.overlay.currentItem = newItemIndex;
-        this.$emit('silentbox-overlay-next-item-displayed');
+        this.$emit('silentbox-overlay-next-item-displayed', {
+          item: this.overlay.item
+        });
       },
 
       showPreviousItem() {
@@ -749,7 +755,9 @@
         newItemIndex = newItemIndex > -1 ? newItemIndex : this.galleryItems.length - 1;
         this.overlay.item = this.galleryItems[newItemIndex];
         this.overlay.currentItem = newItemIndex;
-        this.$emit('silentbox-overlay-previous-item-displayed');
+        this.$emit('silentbox-overlay-previous-item-displayed', {
+          item: this.overlay.item
+        });
       },
 
       setAutoplay(item) {
@@ -838,7 +846,7 @@
     /* style */
     const __vue_inject_styles__$1 = function (inject) {
       if (!inject) return
-      inject("data-v-37ba0f4d_0", { source: ".silentbox-item {\n  cursor: pointer;\n  display: inline-block;\n  text-decoration: underline;\n}\n\n/*# sourceMappingURL=gallery.vue.map */", map: {"version":3,"sources":["/Users/silencesys/Projects/Silencesys/silentbox/src/Silentbox/src/components/gallery.vue","gallery.vue"],"names":[],"mappings":"AA8KA;EACA,eAAA;EACA,qBAAA;EACA,0BAAA;AC7KA;;AAEA,sCAAsC","file":"gallery.vue","sourcesContent":["<template>\n  <section id=\"silentbox-gallery\">\n    <slot />\n    <div\n      v-for=\"(image, index) in previewGallery\"\n      :key=\"image.src\"\n      @click=\"openOverlay(image, index)\"\n      class=\"silentbox-item\"\n    >\n      <slot\n          name=\"silentbox-item\"\n          v-bind:silentboxItem=\"image\"\n      >\n        <img\n          :loading=\"(lazyLoading)? 'lazy' : 'eager'\"\n          :src=\"image.thumbnail\"\n          :alt=\"image.alt\"\n          :width=\"image.thumbnailWidth\"\n          :height=\"image.thumbnailHeight\"\n        >\n      </slot>\n    </div>\n    <silentbox-overlay\n      v-if=\"overlay.visible\"\n      :overlay-item=\"overlay.item\"\n      :visible=\"overlay.visible\"\n      :total-items=\"totalItems\"\n      @closeSilentboxOverlay=\"hideOverlay\"\n      @requestNextSilentBoxItem=\"showNextItem\"\n      @requestPreviousSilentBoxItem=\"showPreviousItem\"\n    />\n  </section>\n</template>\n\n<script>\nimport overlay from './overlay.vue'\nimport itemMixin from './../mixins/item'\n\nexport default {\n  name: 'silentboxGallery',\n  mixins: [itemMixin],\n  props: {\n    lazyLoading: {\n      type: Boolean,\n      default: () => {\n        return true\n      }\n    },\n    previewCount: {\n      type: Number,\n      default: null\n    },\n    gallery: {\n      type: Array,\n      default: () => {\n        return []\n      }\n    },\n    image: {\n      type: Object,\n      default: () => {\n        return {\n          src: '',\n          alt: '',\n          thumbnailWidth: 'auto',\n          thumbnailHeight: 'auto',\n          thumbnail: '',\n          autoplay: false,\n          controls: true,\n          description: ''\n        }\n      }\n    }\n  },\n  components: {\n    'silentbox-overlay': overlay\n  },\n  data () {\n    return {\n      overlay: {\n        item: {\n          src: '',\n          alt: '',\n          thumbnailWidth: 'auto',\n          thumbnailHeight: 'auto',\n          thumbnail: '',\n          autoplay: false,\n          controls: true,\n          description: ''\n        },\n        visible: false,\n        currentItem: 0\n      }\n    }\n  },\n  computed: {\n    totalItems () {\n      return this.gallery.length || 1\n    },\n    previewGallery () {\n      if (Number.isInteger(this.previewCount)) {\n        return this.gallery.slice(0, this.previewCount).map(item => {\n          return {\n            ...this.overlay.item,\n            ...item,\n            thumbnail: this.setThumbnail(item),\n            autoplay: this.setAutoplay(item)\n          }\n        })\n      }\n      return this.galleryItems\n    },\n    galleryItems () {\n      if (this.gallery.length > 0) {\n        return this.gallery.map(item => {\n          return {\n            ...this.overlay.item,\n            ...item,\n            thumbnail: this.setThumbnail(item),\n            autoplay: this.setAutoplay(item)\n          }\n        })\n      }\n      return [{\n        ...this.overlay.item,\n        ...this.image,\n        thumbnail: this.setThumbnail(this.image)\n      }]\n    }\n  },\n  methods: {\n    openOverlay (image, index) {\n      this.overlay.visible = true\n      this.overlay.item = image\n      this.overlay.currentItem = index\n      this.$emit('silentbox-overlay-opened')\n    },\n    hideOverlay () {\n      this.overlay.visible = false\n      this.$emit('silentbox-overlay-hidden')\n    },\n    showNextItem () {\n      let newItemIndex = this.overlay.currentItem + 1\n      newItemIndex = newItemIndex <= this.galleryItems.length - 1\n        ? newItemIndex : 0\n\n      this.overlay.item = this.galleryItems[newItemIndex]\n      this.overlay.currentItem = newItemIndex\n      this.$emit('silentbox-overlay-next-item-displayed')\n    },\n    showPreviousItem () {\n      let newItemIndex = this.overlay.currentItem - 1\n      newItemIndex = newItemIndex > -1\n        ? newItemIndex : this.galleryItems.length - 1\n\n      this.overlay.item = this.galleryItems[newItemIndex]\n      this.overlay.currentItem = newItemIndex\n      this.$emit('silentbox-overlay-previous-item-displayed')\n    },\n    setAutoplay (item) {\n      return item.autoplay ? 'autoplay' : ''\n    },\n    setThumbnail (item) {\n      if (this.isEmbedVideo(item.src) && item.thumbnail === undefined) {\n        return this.getThumbnail(item.src)\n      }\n\n      return item.thumbnail || item.src\n    }\n  }\n}\n</script>\n\n<style lang=\"scss\">\n  .silentbox-item {\n      cursor: pointer;\n      display: inline-block;\n      text-decoration: underline;\n  }\n</style>\n",".silentbox-item {\n  cursor: pointer;\n  display: inline-block;\n  text-decoration: underline;\n}\n\n/*# sourceMappingURL=gallery.vue.map */"]}, media: undefined });
+      inject("data-v-832c0c28_0", { source: ".silentbox-item {\n  cursor: pointer;\n  display: inline-block;\n  text-decoration: underline;\n}\n\n/*# sourceMappingURL=gallery.vue.map */", map: {"version":3,"sources":["/Users/silencesys/Projects/Silencesys/silentbox/src/Silentbox/src/components/gallery.vue","gallery.vue"],"names":[],"mappings":"AA8KA;EACA,eAAA;EACA,qBAAA;EACA,0BAAA;AC7KA;;AAEA,sCAAsC","file":"gallery.vue","sourcesContent":["<template>\n  <section id=\"silentbox-gallery\">\n    <slot />\n    <div\n      v-for=\"(image, index) in previewGallery\"\n      :key=\"image.src\"\n      @click=\"openOverlay(image, index)\"\n      class=\"silentbox-item\"\n    >\n      <slot\n          name=\"silentbox-item\"\n          v-bind:silentboxItem=\"image\"\n      >\n        <img\n          :loading=\"(lazyLoading)? 'lazy' : 'eager'\"\n          :src=\"image.thumbnail\"\n          :alt=\"image.alt\"\n          :width=\"image.thumbnailWidth\"\n          :height=\"image.thumbnailHeight\"\n        >\n      </slot>\n    </div>\n    <silentbox-overlay\n      v-if=\"overlay.visible\"\n      :overlay-item=\"overlay.item\"\n      :visible=\"overlay.visible\"\n      :total-items=\"totalItems\"\n      @closeSilentboxOverlay=\"hideOverlay\"\n      @requestNextSilentBoxItem=\"showNextItem\"\n      @requestPreviousSilentBoxItem=\"showPreviousItem\"\n    />\n  </section>\n</template>\n\n<script>\nimport overlay from './overlay.vue'\nimport itemMixin from './../mixins/item'\n\nexport default {\n  name: 'silentboxGallery',\n  mixins: [itemMixin],\n  props: {\n    lazyLoading: {\n      type: Boolean,\n      default: () => {\n        return true\n      }\n    },\n    previewCount: {\n      type: Number,\n      default: null\n    },\n    gallery: {\n      type: Array,\n      default: () => {\n        return []\n      }\n    },\n    image: {\n      type: Object,\n      default: () => {\n        return {\n          src: '',\n          alt: '',\n          thumbnailWidth: 'auto',\n          thumbnailHeight: 'auto',\n          thumbnail: '',\n          autoplay: false,\n          controls: true,\n          description: ''\n        }\n      }\n    }\n  },\n  components: {\n    'silentbox-overlay': overlay\n  },\n  data () {\n    return {\n      overlay: {\n        item: {\n          src: '',\n          alt: '',\n          thumbnailWidth: 'auto',\n          thumbnailHeight: 'auto',\n          thumbnail: '',\n          autoplay: false,\n          controls: true,\n          description: ''\n        },\n        visible: false,\n        currentItem: 0\n      }\n    }\n  },\n  computed: {\n    totalItems () {\n      return this.gallery.length || 1\n    },\n    previewGallery () {\n      if (Number.isInteger(this.previewCount)) {\n        return this.gallery.slice(0, this.previewCount).map(item => {\n          return {\n            ...this.overlay.item,\n            ...item,\n            thumbnail: this.setThumbnail(item),\n            autoplay: this.setAutoplay(item)\n          }\n        })\n      }\n      return this.galleryItems\n    },\n    galleryItems () {\n      if (this.gallery.length > 0) {\n        return this.gallery.map(item => {\n          return {\n            ...this.overlay.item,\n            ...item,\n            thumbnail: this.setThumbnail(item),\n            autoplay: this.setAutoplay(item)\n          }\n        })\n      }\n      return [{\n        ...this.overlay.item,\n        ...this.image,\n        thumbnail: this.setThumbnail(this.image)\n      }]\n    }\n  },\n  methods: {\n    openOverlay (image, index = 0) {\n      this.overlay.visible = true\n      this.overlay.item = image\n      this.overlay.currentItem = index\n      this.$emit('silentbox-overlay-opened', { item: image })\n    },\n    hideOverlay () {\n      this.overlay.visible = false\n      this.$emit('silentbox-overlay-hidden', { item: this.overlay.item })\n    },\n    showNextItem () {\n      let newItemIndex = this.overlay.currentItem + 1\n      newItemIndex = newItemIndex <= this.galleryItems.length - 1\n        ? newItemIndex : 0\n\n      this.overlay.item = this.galleryItems[newItemIndex]\n      this.overlay.currentItem = newItemIndex\n      this.$emit('silentbox-overlay-next-item-displayed', { item: this.overlay.item })\n    },\n    showPreviousItem () {\n      let newItemIndex = this.overlay.currentItem - 1\n      newItemIndex = newItemIndex > -1\n        ? newItemIndex : this.galleryItems.length - 1\n\n      this.overlay.item = this.galleryItems[newItemIndex]\n      this.overlay.currentItem = newItemIndex\n      this.$emit('silentbox-overlay-previous-item-displayed', { item: this.overlay.item })\n    },\n    setAutoplay (item) {\n      return item.autoplay ? 'autoplay' : ''\n    },\n    setThumbnail (item) {\n      if (this.isEmbedVideo(item.src) && item.thumbnail === undefined) {\n        return this.getThumbnail(item.src)\n      }\n\n      return item.thumbnail || item.src\n    }\n  }\n}\n</script>\n\n<style lang=\"scss\">\n  .silentbox-item {\n      cursor: pointer;\n      display: inline-block;\n      text-decoration: underline;\n  }\n</style>\n",".silentbox-item {\n  cursor: pointer;\n  display: inline-block;\n  text-decoration: underline;\n}\n\n/*# sourceMappingURL=gallery.vue.map */"]}, media: undefined });
 
     };
     /* scoped */
@@ -868,12 +876,39 @@
 
   const VueSilentbox = {};
 
-  VueSilentbox.install = function (Vue, options) {
+  VueSilentbox.install = function (Vue) {
     Vue.mixin({
       components: {
         'silent-box': __vue_component__$1
       }
     });
+    Vue.prototype.$silentbox = {
+      /**
+       * Programatically open SilentBox overlay.
+       *
+       * @param {Object} image
+       */
+      open: image => {
+        const OverlayClass = Vue.extend(__vue_component__);
+        const instance = new OverlayClass().$mount();
+        instance.$set(instance, 'visible', true);
+        instance.$set(instance, 'overlayItem', image); // Get the website body, so we can append false silentbox root to it later
+
+        const bodyRoot = document.getElementsByTagName('body')[0]; // Create false silentbox root
+
+        const silentboxRoot = document.createElement('div'); // Set ID to false silentbox root, so we can target it in some cases
+
+        silentboxRoot.setAttribute('id', 'silentbox--false-root'); // Register the elements
+
+        silentboxRoot.appendChild(instance.$el);
+        bodyRoot.appendChild(silentboxRoot);
+        instance.$on('closeSilentboxOverlay', () => {
+          // Remove and destroy the instance after closing.
+          silentboxRoot.remove();
+          instance.$destroy();
+        });
+      }
+    };
   };
 
   exports.default = VueSilentbox;

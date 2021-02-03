@@ -120,13 +120,45 @@ These attributes can change the gallery element behaviour.
 | preview-count | no | number | number of images that should be displayed in the gallery |
 
 ### Events
-SilentBox also fires several events that can be further used in your Vue.js application.
+SilentBox also fires several events that can be further used in your Vue.js application. Each event has a payload that contains the
+`item` object which holds information about the currently displayed item.
 | Event name | When is event fired |
 |:------| :------ |
 | `silentbox-overlay-opened` | when the overlay is opened |
 | `silentbox-overlay-hidden` | when the overlay is closed (button or ESC key) |
 | `silentbox-overlay-next-item-displayed` | when the user moves to the next picture (arrow or key) |
 | `silentbox-overlay-previous-item-displayed` | when the user moves to the previous picture (arrow or key) |
+
+### Open overlay programatically
+SilentBox provides two options how to open the overlay programatically. If you need to open an existing gallery, the best option
+is to use the `ref` attribute and then call the method `openOverlay` on the `$refs` object in your method. See example:
+```html
+<silent-box ref="silentbox" :gallery="images"></silent-box>
+```
+and then the method `openOverlay` can be called from your method:
+```javascript
+...
+methods: {
+    // the index parameter is optional, however it should be set if you're opening
+    // the overlay on different position than the beginning of the gallery
+    openOverlayProgramaticallyWithContext (item, index = 0) {
+        this.$refs.silentbox.openOverlay(item, index)
+    }
+}
+...
+```
+
+However, in case you just want to open an item without any context, it might be a better choice to call the global `open`
+method that SilentBox provides.
+```javascript
+...
+methods: {
+    openOverlayProgramaticallyWithoutContext (item) {
+        this.$silentbox.open(item)
+    }
+}
+...
+```
 
 <br>
 

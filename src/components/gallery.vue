@@ -129,15 +129,15 @@ export default {
     }
   },
   methods: {
-    openOverlay (image, index) {
+    openOverlay (image, index = 0) {
       this.overlay.visible = true
       this.overlay.item = image
       this.overlay.currentItem = index
-      this.$emit('silentbox-overlay-opened')
+      this.$emit('silentbox-overlay-opened', { item: image })
     },
     hideOverlay () {
       this.overlay.visible = false
-      this.$emit('silentbox-overlay-hidden')
+      this.$emit('silentbox-overlay-hidden', { item: this.overlay.item })
     },
     showNextItem () {
       let newItemIndex = this.overlay.currentItem + 1
@@ -146,7 +146,7 @@ export default {
 
       this.overlay.item = this.galleryItems[newItemIndex]
       this.overlay.currentItem = newItemIndex
-      this.$emit('silentbox-overlay-next-item-displayed')
+      this.$emit('silentbox-overlay-next-item-displayed', { item: this.overlay.item })
     },
     showPreviousItem () {
       let newItemIndex = this.overlay.currentItem - 1
@@ -155,7 +155,7 @@ export default {
 
       this.overlay.item = this.galleryItems[newItemIndex]
       this.overlay.currentItem = newItemIndex
-      this.$emit('silentbox-overlay-previous-item-displayed')
+      this.$emit('silentbox-overlay-previous-item-displayed', { item: this.overlay.item })
     },
     setAutoplay (item) {
       return item.autoplay ? 'autoplay' : ''
