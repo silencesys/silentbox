@@ -137,7 +137,7 @@ is to use the `ref` attribute and then call the method `openOverlay` on the `$re
 ```
 and then the method `openOverlay` can be called from your method:
 ```javascript
-...
+// ...
 methods: {
     // the index parameter is optional, however it should be set if you're opening
     // the overlay on different position than the beginning of the gallery
@@ -145,19 +145,19 @@ methods: {
         this.$refs.silentbox.openOverlay(item, index)
     }
 }
-...
+// ...
 ```
 
 However, in case you just want to open an item without any context, it might be a better choice to call the global `open`
 method that SilentBox provides.
 ```javascript
-...
+// ...
 methods: {
     openOverlayProgramaticallyWithoutContext (item) {
         this.$silentbox.open(item)
     }
 }
-...
+// ...
 ```
 
 <br>
