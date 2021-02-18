@@ -246,7 +246,7 @@ export default {
       if (videoId) {
         videoUrl = `${location.protocol}//www.youtube.com/embed/${videoId}?rel=0`
 
-        if (this.overlayItem.autoplay === 'autoplay') {
+        if (this.overlayItem.autoplay) {
           videoUrl += '&autoplay=1'
         }
         if (!this.overlayItem.controls) {
