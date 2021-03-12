@@ -18,7 +18,7 @@
             <!-- embed video rendering -->
             <iframe
               v-if="isEmbedVideo(overlayItem.src)"
-              :allow="`'accelerometer; ${ !!overlayItem.autoplay && 'autoplay;' } encrypted-media; gyroscope; picture-in-picture`"
+              :allow="`accelerometer; ${ !!overlayItem.autoplay && 'autoplay;' } encrypted-media; gyroscope; picture-in-picture`"
               :src="handleUrl(overlayItem.src)"
               frameborder="0"
               width="100%"
