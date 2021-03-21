@@ -1,10 +1,11 @@
 <template>
   <section id="silentbox-gallery">
     <slot />
-    <div
+    <a
       v-for="(image, index) in previewGallery"
       :key="image.src"
-      @click="openOverlay(image, index)"
+      :href="image.src"
+      @click.prevent="openOverlay(image, index)"
       class="silentbox-item"
     >
       <slot
@@ -19,7 +20,7 @@
           :height="image.thumbnailHeight"
         >
       </slot>
-    </div>
+    </a>
     <silentbox-overlay
       v-if="overlay.visible"
       :overlay-item="overlay.item"
