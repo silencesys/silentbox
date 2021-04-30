@@ -1,5 +1,5 @@
 <template>
-  <section id="silentbox-gallery">
+  <div id="silentbox-gallery">
     <slot />
     <a
       v-for="(image, index) in previewGallery"
@@ -30,7 +30,7 @@
       @requestNextSilentBoxItem="showNextItem"
       @requestPreviousSilentBoxItem="showPreviousItem"
     />
-  </section>
+  </div>
 </template>
 
 <script>
