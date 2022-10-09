@@ -410,7 +410,7 @@ function addStyle(id, css) {
 const __vue_script__ = script;
 
 /* template */
-var __vue_render__ = function() {
+var __vue_render__ = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -419,7 +419,7 @@ var __vue_render__ = function() {
         "div",
         {
           attrs: { id: "silentbox-overlay" },
-          on: { touchstart: _vm.touchStart, touchmove: _vm.touchMove }
+          on: { touchstart: _vm.touchStart, touchmove: _vm.touchMove },
         },
         [
           _c("div", { attrs: { id: "silentbox-overlay__background" } }),
@@ -434,11 +434,11 @@ var __vue_render__ = function() {
                   key: _vm.overlayItem.src,
                   attrs: { id: "silentbox-overlay__content" },
                   on: {
-                    click: function($event) {
+                    click: function ($event) {
                       $event.stopPropagation();
-                      return _vm.closeSilentboxOverlay($event)
-                    }
-                  }
+                      return _vm.closeSilentboxOverlay.apply(null, arguments)
+                    },
+                  },
                 },
                 [
                   _c("div", { attrs: { id: "silentbox-overlay__embed" } }, [
@@ -457,8 +457,8 @@ var __vue_render__ = function() {
                                 frameborder: "0",
                                 width: "100%",
                                 height: "100%",
-                                allowfullscreen: ""
-                              }
+                                allowfullscreen: "",
+                              },
                             })
                           : _vm.isLocalVideo(_vm.overlayItem.src)
                           ? _c(
@@ -470,9 +470,9 @@ var __vue_render__ = function() {
                                   attrs: {
                                     src: _vm.overlayItem.src,
                                     autoplay: _vm.overlayItem.autoplay,
-                                    controls: ""
-                                  }
-                                })
+                                    controls: "",
+                                  },
+                                }),
                               ]
                             )
                           : _c("img", {
@@ -483,9 +483,9 @@ var __vue_render__ = function() {
                                 src: _vm.overlayItem.src,
                                 alt: _vm.overlayItem.alt,
                                 width: "auto",
-                                height: "auto"
-                              }
-                            })
+                                height: "auto",
+                              },
+                            }),
                       ]
                     ),
                     _vm._v(" "),
@@ -498,13 +498,13 @@ var __vue_render__ = function() {
                               "\n            " +
                                 _vm._s(_vm.overlayItem.description) +
                                 "\n        "
-                            )
+                            ),
                           ]
                         )
-                      : _vm._e()
-                  ])
+                      : _vm._e(),
+                  ]),
                 ]
-              )
+              ),
             ]
           ),
           _vm._v(" "),
@@ -514,23 +514,23 @@ var __vue_render__ = function() {
               attrs: {
                 id: "silentbox-overlay__close-button",
                 role: "button",
-                tabindex: "3"
+                tabindex: "3",
               },
               on: {
-                click: function($event) {
+                click: function ($event) {
                   $event.stopPropagation();
-                  return _vm.closeSilentboxOverlay($event)
+                  return _vm.closeSilentboxOverlay.apply(null, arguments)
                 },
-                keyup: function($event) {
+                keyup: function ($event) {
                   if (
                     !$event.type.indexOf("key") &&
                     _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                   ) {
                     return null
                   }
-                  return _vm.closeSilentboxOverlay($event)
-                }
-              }
+                  return _vm.closeSilentboxOverlay.apply(null, arguments)
+                },
+              },
             },
             [_c("div", { staticClass: "icon" })]
           ),
@@ -541,43 +541,43 @@ var __vue_render__ = function() {
                   staticClass: "arrow arrow-previous",
                   attrs: { role: "button", tabindex: "2" },
                   on: {
-                    click: function($event) {
+                    click: function ($event) {
                       $event.stopPropagation();
-                      return _vm.moveToPreviousItem($event)
+                      return _vm.moveToPreviousItem.apply(null, arguments)
                     },
-                    keyup: function($event) {
+                    keyup: function ($event) {
                       if (
                         !$event.type.indexOf("key") &&
                         _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                       ) {
                         return null
                       }
-                      return _vm.moveToPreviousItem($event)
-                    }
-                  }
+                      return _vm.moveToPreviousItem.apply(null, arguments)
+                    },
+                  },
                 }),
                 _vm._v(" "),
                 _c("div", {
                   staticClass: "arrow arrow-next",
                   attrs: { role: "button", tabindex: "1" },
                   on: {
-                    click: function($event) {
+                    click: function ($event) {
                       $event.stopPropagation();
-                      return _vm.moveToNextItem($event)
+                      return _vm.moveToNextItem.apply(null, arguments)
                     },
-                    keyup: function($event) {
+                    keyup: function ($event) {
                       if (
                         !$event.type.indexOf("key") &&
                         _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
                       ) {
                         return null
                       }
-                      return _vm.moveToNextItem($event)
-                    }
-                  }
-                })
+                      return _vm.moveToNextItem.apply(null, arguments)
+                    },
+                  },
+                }),
               ])
-            : _vm._e()
+            : _vm._e(),
         ],
         1
       )
@@ -770,7 +770,7 @@ var script$1 = {
 const __vue_script__$1 = script$1;
 
 /* template */
-var __vue_render__$1 = function() {
+var __vue_render__$1 = function () {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -780,7 +780,7 @@ var __vue_render__$1 = function() {
     [
       _vm._t("default"),
       _vm._v(" "),
-      _vm._l(_vm.previewGallery, function(image, index) {
+      _vm._l(_vm.previewGallery, function (image, index) {
         return _c(
           "a",
           {
@@ -788,28 +788,30 @@ var __vue_render__$1 = function() {
             staticClass: "silentbox-item",
             attrs: { href: image.src },
             on: {
-              click: function($event) {
+              click: function ($event) {
                 $event.preventDefault();
                 return _vm.openOverlay(image, index)
-              }
-            }
+              },
+            },
           },
           [
             _vm._t(
               "silentbox-item",
-              [
-                _c("img", {
-                  attrs: {
-                    loading: _vm.lazyLoading ? "lazy" : "eager",
-                    src: image.thumbnail,
-                    alt: image.alt,
-                    width: image.thumbnailWidth,
-                    height: image.thumbnailHeight
-                  }
-                })
-              ],
+              function () {
+                return [
+                  _c("img", {
+                    attrs: {
+                      loading: _vm.lazyLoading ? "lazy" : "eager",
+                      src: image.thumbnail,
+                      alt: image.alt,
+                      width: image.thumbnailWidth,
+                      height: image.thumbnailHeight,
+                    },
+                  }),
+                ]
+              },
               { silentboxItem: image }
-            )
+            ),
           ],
           2
         )
@@ -820,15 +822,15 @@ var __vue_render__$1 = function() {
             attrs: {
               "overlay-item": _vm.overlay.item,
               visible: _vm.overlay.visible,
-              "total-items": _vm.totalItems
+              "total-items": _vm.totalItems,
             },
             on: {
               closeSilentboxOverlay: _vm.hideOverlay,
               requestNextSilentBoxItem: _vm.showNextItem,
-              requestPreviousSilentBoxItem: _vm.showPreviousItem
-            }
+              requestPreviousSilentBoxItem: _vm.showPreviousItem,
+            },
           })
-        : _vm._e()
+        : _vm._e(),
     ],
     2
   )
