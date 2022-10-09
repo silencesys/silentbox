@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://silentbox.silencesys.com/images/silentbox-v3.png" alt="SilentBox 3.0 a lightbox vue.js component"/>
+<img src="https://silentbox.rocek.dev/images/silentbox-v3.png" alt="SilentBox 3.0 a lightbox vue.js component"/>
 </p>
 
 <p align="center">
