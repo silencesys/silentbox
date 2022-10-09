@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
-import { getThumbnail, isEmbedVideo } from '../utils/itemUtils'
+import { getThumbnail, isEmbedVideo, isValidURL } from '../utils/itemUtils'
 import type { ItemProps, OverlayEventProps } from '../types'
 import SilentBoxOverlay, { type OverlayProps } from './SilentBoxOverlay.vue'
 
@@ -29,6 +29,10 @@ const props = withDefaults(defineProps<GalleryProps>(), {
   })
 })
 
+const totalItems = computed<number>(() => {
+  if (props.gallery) return props.gallery.length
+  return 1
+})
 const overlay: OverlayProps = reactive({
   item: {
     src: '',
@@ -42,7 +46,7 @@ const overlay: OverlayProps = reactive({
   },
   visible: false,
   currentItem: 0,
-  totalItems: 0
+  totalItems
 })
 const mapItem = (item: ItemProps): ItemProps => ({
   ...overlay.item,
@@ -66,13 +70,9 @@ const setThumbnail = (item: ItemProps) => {
   if (isEmbedVideo(item.src) && !item.thumbnail) {
     return getThumbnail(item.src, props.fallbackThumbnail)
   }
-  return item.thumbnail || item.src
+  if (item.thumbnail && isValidURL(item.thumbnail)) return item.thumbnail
+  return item.src
 }
-const totalItems = computed<number>(() => {
-  if (props.gallery) return props.gallery.length
-  return 1
-})
-
 const emit = defineEmits([
   'silentbox-overlay-opened',
   'silentbox-overlay-hidden',

@@ -1,4 +1,5 @@
-import { describe, it, expect, afterEach } from 'vitest'
+import { describe, it, expect, afterEach, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
 import { cleanup, fireEvent, render } from '@testing-library/vue'
 import type { ItemProps } from '../../types'
 import SilentBoxGallery from '../../components/SilentBoxGallery.vue'
@@ -34,6 +35,7 @@ describe('Test SilentBoxGallery.vue | Gallery', () => {
     expect(queryAllByRole('img')).toHaveLength(2)
   })
 })
+
 describe('Test SilentBoxGallery.vue | Thumbnail image', () => {
   afterEach(() => {
     cleanup()
@@ -72,9 +74,10 @@ describe('Test SilentBoxGallery.vue | Thumbnail image', () => {
   it('should have thumbnail src', async () => {
     const { queryByRole } = render(SilentBoxGallery, { props: { ...props, image: videoItem } })
     // we can not incldue protocol as it is unknown at this stage
-    expect(queryByRole('img')).toHaveProperty('src', '//img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
+    expect(queryByRole('img')).toHaveProperty('src', 'https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
   })
 })
+
 describe('Test SilentBoxGallery.vue | silentbox-item slot', () => {
   afterEach(() => {
     cleanup()
@@ -156,6 +159,7 @@ describe('Test SilentBoxGallery.vue | silentbox-item slot', () => {
     expect(queryByText('Item description')?.innerText).toBe('Item description')
   })
 })
+
 describe('Test SilentBoxGallery.vue | anchor link', () => {
   afterEach(() => {
     cleanup()
@@ -183,12 +187,19 @@ describe('Test SilentBoxGallery.vue | anchor link', () => {
     expect(emitted('silentbox-overlay-opened')).toStrictEqual([[{ item: { ...item, autoplay: false, thumbnail: item.src } }]])
   })
   it('should open overlay on @click', async () => {
-    const { getByRole } = render(SilentBoxGallery, { props })
-    const link = getByRole('link')
-    await fireEvent.click(link)
-    expect(getByRole('overlay'))
+    const wrapper = mount(SilentBoxGallery, { props })
+    await wrapper.get('.silentbox-item').trigger('click')
+    expect(wrapper.find('#silentbox-overlay').exists()).toBeTruthy()
+    expect(wrapper.vm.overlay).toStrictEqual({
+      currentItem: 0,
+      item: { ...props.image, thumbnail: props.image.src },
+      totalItems: 0,
+      visible: true
+    })
+    expect(wrapper.emitted()).toHaveProperty('silentbox-overlay-opened')
   })
 })
+
 describe('Test SilentBoxGallery.vue | Default slot', () => {
   afterEach(() => {
     cleanup()
@@ -218,5 +229,158 @@ describe('Test SilentBoxGallery.vue | Default slot', () => {
         }
       })
     expect(queryByText('Custom text')?.innerText).toContain('Custom text')
+  })
+})
+
+describe('Test SilentBoxGallery.vue | Events', () => {
+  afterEach(() => {
+    cleanup()
+  })
+  const props = {
+    lazyLoading: true,
+    previewCount: 0,
+    fallbackThumbnail: '',
+    gallery: [
+      item,
+      {
+        ...item,
+        src: 'https://example2.jpg',
+        thumbnail: 'https://example2.jpg'
+      },
+      {
+        ...item,
+        src: 'https://example3.jpg',
+        thumbnail: 'https://example3.jpg'
+      }
+    ]
+  }
+  it('should change item to next item on @getNextItem', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    wrapper.vm.showNextItem()
+    expect(wrapper.vm.overlay).toStrictEqual({
+      currentItem: 1,
+      item: props.gallery[1],
+      totalItems: 3,
+      visible: false
+    })
+    const nextEvent = wrapper.emitted()
+    expect(nextEvent).toHaveProperty('silentbox-overlay-next-item-displayed')
+    expect(nextEvent['silentbox-overlay-next-item-displayed'][0]).toStrictEqual([props.gallery[1]])
+  })
+  it('should change item to prev item on @getPrevItem', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    wrapper.vm.showPrevItem()
+    expect(wrapper.vm.overlay).toStrictEqual({
+      currentItem: 2,
+      item: props.gallery[2],
+      totalItems: 3,
+      visible: false
+    })
+    const prevEvent = wrapper.emitted()
+    expect(prevEvent).toHaveProperty('silentbox-overlay-prev-item-displayed')
+    expect(prevEvent['silentbox-overlay-prev-item-displayed'][0]).toStrictEqual([props.gallery[2]])
+  })
+  it('should close overlay on @closeSilentBoxOverlay', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    await wrapper.get('.silentbox-item').trigger('click')
+    expect(wrapper.find('#silentbox-overlay').exists()).toBeTruthy()
+    expect(wrapper.vm.overlay).toStrictEqual({
+      currentItem: 0,
+      item: { ...props.gallery[0], thumbnail: props.gallery[0].src },
+      totalItems: 3,
+      visible: true
+    })
+    await wrapper.vm.hideOverlay()
+    expect(wrapper.emitted()).toHaveProperty('silentbox-overlay-hidden')
+    expect(wrapper.vm.overlay.visible).toBeFalsy()
+  })
+})
+
+describe('Test SilentBoxGallery.vue | Other tests', () => {
+  afterEach(() => {
+    cleanup()
+  })
+  const props = {
+    lazyLoading: true,
+    previewCount: 0,
+    fallbackThumbnail: '',
+    gallery: [
+      item,
+      {
+        ...item,
+        src: 'https://example2.jpg',
+        thumbnail: 'https://example2.jpg'
+      },
+      {
+        ...item,
+        src: 'https://example3.jpg',
+        thumbnail: 'https://example3.jpg'
+      }
+    ]
+  }
+  vi.stubGlobal('location', { protocol: 'https:' })
+  it('should always have correct totalItems number', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    expect(wrapper.vm.totalItems).toBe(3)
+  })
+  it('should return thumbnail based on src when no thumbnail is provided', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://example.com/thumbnail.jpg'
+    }
+    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/thumbnail.jpg')
+  })
+  it('should return thumbnail if provided', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://example.com/image.jpg',
+      thumbnail: 'https://example.com/thumbnail.jpg'
+    }
+    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/thumbnail.jpg')
+  })
+  it('should return thumbnail if provided with wrong value: boolean', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://example.com/image.jpg',
+      thumbnail: false
+    }
+    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/image.jpg')
+  })
+  it('should return thumbnail if provided with wrong value: string', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://example.com/image.jpg',
+      thumbnail: 'string'
+    }
+    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/image.jpg')
+  })
+  it('should return thumbnail if provided with wrong value: number', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://example.com/image.jpg',
+      thumbnail: 12345
+    }
+    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/image.jpg')
+  })
+  it('should return thumbnail if provided with YouTube link', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://www.youtube.com/watch?v=1xqwnD3BdT4'
+    }
+    expect(wrapper.vm.setThumbnail(item)).toBe('https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
+  })
+  it('should create valid item', async () => {
+    const wrapper = mount(SilentBoxGallery, { props })
+    const item = {
+      src: 'https://www.youtube.com/watch?v=1xqwnD3BdT4',
+      thumbnail: 'https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg',
+      autoplay: true,
+      controls: true,
+      description: 'Image description',
+      alt: 'Image alt',
+      thumbnailWidth: 150,
+      thumbnailHeight: 150
+    }
+    expect(wrapper.vm.mapItem(item)).toStrictEqual(item)
   })
 })

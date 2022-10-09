@@ -29,48 +29,15 @@ describe.concurrent('it isEmbedVideo(itemSrc: string): boolean', () => {
   })
 })
 describe.concurrent('it isLocalVideo(itemSrc: string): boolean', () => {
-  it('.mp4 file is recognized as local video file', () => {
-    expect(isLocalVideo('video.mp4')).toBeTruthy()
-  })
-  it('.ogg file is recognized as local video file', () => {
-    expect(isLocalVideo('video.ogg')).toBeTruthy()
-  })
-  it('.webm file is recognized as local video file', () => {
-    expect(isLocalVideo('video.webm')).toBeTruthy()
-  })
-  it('.mov file is recognized as local video file', () => {
-    expect(isLocalVideo('video.mov')).toBeTruthy()
-  })
-  it('.flv file is recognized as local video file', () => {
-    expect(isLocalVideo('video.flv')).toBeTruthy()
-  })
-  it('.wmv file is recognized as local video file', () => {
-    expect(isLocalVideo('video.wmv')).toBeTruthy()
-  })
-  it('.mkv file is recognized as local video file', () => {
-    expect(isLocalVideo('video.mkv')).toBeTruthy()
-  })
-  it('.MP4 file is recognized as local video file', () => {
-    expect(isLocalVideo('video.MP4')).toBeTruthy()
-  })
-  it('.OGG file is recognized as local video file', () => {
-    expect(isLocalVideo('video.OGG')).toBeTruthy()
-  })
-  it('.WEBM file is recognized as local video file', () => {
-    expect(isLocalVideo('video.WEBM')).toBeTruthy()
-  })
-  it('.MOV file is recognized as local video file', () => {
-    expect(isLocalVideo('video.MOV')).toBeTruthy()
-  })
-  it('.FLV file is recognized as local video file', () => {
-    expect(isLocalVideo('video.FLV')).toBeTruthy()
-  })
-  it('.WMV file is recognized as local video file', () => {
-    expect(isLocalVideo('video.WMV')).toBeTruthy()
-  })
-  it('.MKV file is recognized as local video file', () => {
-    expect(isLocalVideo('video.MKV')).toBeTruthy()
-  })
+  const supportedFormats = [
+    '.mp4', '.ogg', '.webm', '.mov', '.flv', '.wmv', '.mkv',
+    '.MP4', '.OGG', '.WEBM', '.MOV', '.FLV', '.WMV', '.MKV'
+  ]
+  for (const format of supportedFormats) {
+    it(`${format} file is recognized as local video file`, () => {
+      expect(isLocalVideo(`video${format}`)).toBeTruthy()
+    })
+  }
   it('Image file is not recognized as local video file', () => {
     expect(isLocalVideo('video.jpeg')).toBeFalsy()
   })
