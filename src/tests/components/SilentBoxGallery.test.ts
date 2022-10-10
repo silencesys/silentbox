@@ -184,7 +184,7 @@ describe('Test SilentBoxGallery.vue | anchor link', () => {
     const { getByRole, emitted } = render(SilentBoxGallery, { props })
     const link = getByRole('link')
     await fireEvent.click(link)
-    expect(emitted('silentbox-overlay-opened')).toStrictEqual([[{ item: { ...item, autoplay: false, thumbnail: item.src } }]])
+    expect(emitted('silentbox-overlay-opened')).toStrictEqual([[{ ...item, autoplay: false, thumbnail: item.src }]])
   })
   it('should open overlay on @click', async () => {
     const wrapper = mount(SilentBoxGallery, { props })

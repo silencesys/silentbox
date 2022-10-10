@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, reactive } from 'vue'
 import { getThumbnail, isEmbedVideo, isValidURL } from '../utils/itemUtils'
-import type { ItemProps, OverlayEventProps } from '../types'
+import type { ItemProps } from '../types'
 import SilentBoxOverlay, { type OverlayProps } from './SilentBoxOverlay.vue'
 
 export interface GalleryProps {
@@ -83,7 +83,7 @@ const openOverlay = (item: ItemProps, index: number = 0): void => {
   overlay.visible = true
   overlay.item = item
   overlay.currentItem = index
-  emit('silentbox-overlay-opened', { item } as OverlayEventProps)
+  emit('silentbox-overlay-opened', item)
 }
 const hideOverlay = (): void => {
   overlay.visible = false

@@ -5,9 +5,9 @@ export interface ItemProps {
   thumbnailHeight: number,
   thumbnail?: string,
   alt?: string,
+  description?: string,
   autoplay?: boolean,
-  controls?: boolean,
-  description?: string
+  controls?: boolean
 }
 export interface OverlayEventProps {
   item: ItemProps

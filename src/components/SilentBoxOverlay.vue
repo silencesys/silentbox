@@ -56,7 +56,14 @@ const unlockScrolling = (): void => {
 const animation = reactive({
   name: 'silentbox-animation__swipe-left'
 })
-const emit = defineEmits(['closeSilentBoxOverlay', 'getNextItem', 'getPrevItem'])
+const emit = defineEmits([
+  'closeSilentBoxOverlay',
+  'getNextItem',
+  'getPrevItem',
+  // Following events are used only when component is opened from global call
+  'silentbox-overlay-opened',
+  'silentbox-overlay-hidden'
+])
 const handleClose = () => { emit('closeSilentBoxOverlay') }
 const handleMoveNext = () => {
   animation.name = 'silentbox-animation__swipe-left'
@@ -164,6 +171,7 @@ onUpdated(() => {
             <p
               id="silentbox-overlay__description"
               v-if="props.item.description"
+              @click.prevent.stop=""
             >
               {{ props.item.description }}
             </p>
