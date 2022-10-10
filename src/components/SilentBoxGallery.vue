@@ -103,6 +103,8 @@ const showPrevItem = (): void => {
   overlay.currentItem = prevItemIndex
   emit('silentbox-overlay-prev-item-displayed', overlay.item)
 }
+// Expose methods
+defineExpose({ openOverlay })
 </script>
 
 <template>
