@@ -20,10 +20,10 @@ export const isLocalVideo = (itemSrc: string): boolean => {
   })
 }
 export const getThumbnail = (src: string, fallback: string = ''): string => {
-  if (src.includes('youtube.com') || src.includes('youtu.be')) {
+  if (/(youtu\.?be)/.test(src)) {
     const videoId = getYoutubeVideoId(src)
     return `${location.protocol}//img.youtube.com/vi/${videoId}/hqdefault.jpg`
-  } else if (src.includes('vimeo.com')) {
+  } else if (/(vimeo(pro)?\.com)/.test(src)) {
     const videoId = getVimeoVideoId(src)
     const videoDetails = httpGet(`${location.protocol}//vimeo.com/api/v2/video/${videoId}.json`)
     if (videoDetails && videoDetails.length > 0) {

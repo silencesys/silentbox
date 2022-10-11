@@ -33,9 +33,9 @@ const parseVimeoVideo = (url: string): string => {
   return videoURL
 }
 const parseURL = (url: string): string => {
-  if (url.includes('youtube.com') || url.includes('youtu.be')) {
+  if (/(youtu\.?be)/.test(url)) {
     return parseYouTubeVideo(url)
-  } else if (url.includes('vimeo')) {
+  } else if (/(vimeo(pro)?\.com)/.test(url)) {
     return parseVimeoVideo(url)
   }
   return url
