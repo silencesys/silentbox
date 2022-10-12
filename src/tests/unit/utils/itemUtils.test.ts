@@ -96,7 +96,7 @@ describe.concurrent('it getThumbnail(src: string): string', () => {
     )
   })
   it('should fail with text as input', () => {
-    expect(() => getThumbnail('Hello, world!')).toThrowError('Passed source URL is not a valid URL.')
+    expect(() => getThumbnail('Hello, world!')).toThrowError('Given string: src is not valid URL address.')
   })
 })
 describe.concurrent('Test isValidURL(src: string): boolean', () => {

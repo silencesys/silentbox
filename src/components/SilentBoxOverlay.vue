@@ -12,17 +12,30 @@ export interface OverlayProps {
 }
 
 const props = defineProps<OverlayProps>()
+
+/**
+ * Get YouTube video embed URL and set autoplay and controls state.
+ *
+ * @param {string} url any video URL from YouTube
+ * @return string
+ */
 const parseYouTubeVideo = (url: string): string => {
   let videoURL = ''
   const videoId = getYoutubeVideoId(url)
   if (videoId) {
     videoURL = `${location.protocol}//www.youtube.com/embed/${videoId}?rel=0`
     if (props.item.autoplay) videoURL += '&autoplay=1'
-    // we check if controls should be turned OFF as default is ON
+    // check whether controls should disabled as default is enabled
     if (!props.item.controls) videoURL += '&controls=0'
   }
   return videoURL
 }
+/**
+ * Get Vimeo video embed URL and set autoplay and controls state.
+ *
+ * @param {string} url any video URL from Vimeo or VimeoPro
+ * @return string
+ */
 const parseVimeoVideo = (url: string): string => {
   let videoURL = ''
   const videoId = getVimeoVideoId(url)
@@ -32,6 +45,13 @@ const parseVimeoVideo = (url: string): string => {
   }
   return videoURL
 }
+/**
+ * Check whether provided URL is YouTube or Vimeo, otherwise always return it
+ * as it is.
+ *
+ * @param {string} url
+ * @return {string}
+ */
 const parseURL = (url: string): string => {
   if (/(youtu\.?be)/.test(url)) {
     return parseYouTubeVideo(url)
@@ -40,72 +60,105 @@ const parseURL = (url: string): string => {
   }
   return url
 }
-
+/**
+ * Lock horizontal and vertical scrolling when user opens overlay to improve
+ * user-experience.
+ */
 const lockScrolling = (): void => {
   if (!document.body.classList.contains('silentbox-is-opened')) {
     document.body.classList.add('silentbox-is-opened')
   }
 }
+/**
+ * Unlock horizontal and vertical scrolling.
+ */
 const unlockScrolling = (): void => {
   if (document.body.classList.contains('silentbox-is-opened')) {
     document.body.classList.remove('silentbox-is-opened')
   }
 }
 
-// Overlay navigation
 const animation = reactive({
   name: 'silentbox-animation__swipe-left'
 })
+
 const emit = defineEmits([
-  'closeSilentBoxOverlay',
-  'getNextItem',
-  'getPrevItem',
-  // Following events are used only when component is opened from global call
+  'silentbox-internal-close-overlay',
+  'silentbox-internal-get-next-item',
+  'silentbox-internal-get-prev-item',
+  // Following events are emitted only when component is opened from global call
   'silentbox-overlay-opened',
   'silentbox-overlay-hidden'
 ])
-const handleClose = () => { emit('closeSilentBoxOverlay') }
-const handleMoveNext = () => {
+const handleClose = (): void => { emit('silentbox-internal-close-overlay') }
+const handleMoveNext = (): void => {
   animation.name = 'silentbox-animation__swipe-left'
-  emit('getNextItem')
+  emit('silentbox-internal-get-next-item')
 }
-const handleMovePrev = () => {
+const handleMovePrev = (): void => {
   animation.name = 'silentbox-animation__swipe-right'
-  emit('getPrevItem')
+  emit('silentbox-internal-get-prev-item')
 }
-const handleKeys = (event: KeyboardEvent) => {
-  if (event.code === 'Escape') handleClose()
-  if (event.code === 'ArrowRight') handleMoveNext()
-  if (event.code === 'ArrowLeft') handleMovePrev()
-}
+
 const touchData = reactive({
   posX: 0,
   posY: 0
 })
+/**
+ * Save user's start position on touch-enabled device and touch event began.
+ *
+ * @param {TouchEvent} event
+ */
 const touchStart = (event: TouchEvent): void => {
   const { clientX: x, clientY: y } = event.touches[0]
   touchData.posX = x
   touchData.posY = y
 }
+/**
+ * Calculate user's touch movement direction, so we can change overlay content
+ * accordingly.
+ *
+ * @param {TouchEvent} event
+ */
 const touchMove = (event: TouchEvent): void => {
   const { clientX: x, clientY: y } = event.touches[0]
   const { posX, posY } = touchData
 
   if (posX === 0 || posY === 0) {
+    // return if user did not moved
     return
   }
+  // calculate difference between start and movement on x-axis
   const xDiff = posX - x
+  // calculate difference between start and movement on y-axis
   const yDiff = posY - y
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    // User moved on x-axis
     if (xDiff > 0) {
+      // if difference between starging point
+      // and movement point is positive,
+      // move to next item
       handleMoveNext()
     } else {
+      // otherwise move to previous item
       handleMovePrev()
     }
+    // ... y-axis events could be added here
   }
-  // Reset for next move
+
+  // Reset start position for next event
   touchData.posX = 0
   touchData.posY = 0
+}
+/**
+ * Register keyboard interaction.
+ *
+ * @param {KeyboardEvent} event
+ */
+const handleKeys = (event: KeyboardEvent): void => {
+  if (event.code === 'Escape') handleClose()
+  if (event.code === 'ArrowRight') handleMoveNext()
+  if (event.code === 'ArrowLeft') handleMovePrev()
 }
 onUpdated(() => {
   // We must use onUpdate hook as otherwise it seems Vue adds event listener

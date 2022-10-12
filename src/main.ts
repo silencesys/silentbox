@@ -11,7 +11,12 @@ const SilentBox: Plugin = {
      * Global function to call SilentBox on any element.
      */
     Vue.config.globalProperties.$silentbox = {
-      open: (item: ItemProps) => {
+      /**
+       * Open SilentBox programatically via $silentbox global property.
+       *
+       * @param {ItemProps} item
+       */
+      open: (item: ItemProps): void => {
         const silentBoxRoot = document.createElement('div')
         silentBoxRoot.setAttribute('id', 'silentbox--false-root')
         const overlayComponent = createApp(OverlayVue, {
@@ -19,7 +24,7 @@ const SilentBox: Plugin = {
           currentItem: 1,
           totalItems: 1,
           visible: true,
-          onCloseSilentBoxOverlay: () => {
+          onSilentboxInternalCloseOverlay: () => {
             // Emit event with current item so it has the same API as gallery
             overlayInstance.$emit('silentbox-overlay-hidden', item)
             overlayComponent.unmount()

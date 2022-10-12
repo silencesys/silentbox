@@ -193,7 +193,7 @@ describe('Test SilentBoxGallery.vue | anchor link', () => {
     expect(wrapper.vm.overlay).toStrictEqual({
       currentItem: 0,
       item: { ...props.image, thumbnail: props.image.src },
-      totalItems: 0,
+      totalItems: 1,
       visible: true
     })
     expect(wrapper.emitted()).toHaveProperty('silentbox-overlay-opened')
@@ -254,7 +254,7 @@ describe('Test SilentBoxGallery.vue | Events', () => {
       }
     ]
   }
-  it('should change item to next item on @getNextItem', async () => {
+  it('should change item to next item on @silentbox-internal-get-next-item', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
     wrapper.vm.showNextItem()
     expect(wrapper.vm.overlay).toStrictEqual({
@@ -267,7 +267,7 @@ describe('Test SilentBoxGallery.vue | Events', () => {
     expect(nextEvent).toHaveProperty('silentbox-overlay-next-item-displayed')
     expect(nextEvent['silentbox-overlay-next-item-displayed'][0]).toStrictEqual([props.gallery[1]])
   })
-  it('should change item to prev item on @getPrevItem', async () => {
+  it('should change item to prev item on @silentbox-internal-get-prev-item', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
     wrapper.vm.showPrevItem()
     expect(wrapper.vm.overlay).toStrictEqual({
@@ -280,7 +280,7 @@ describe('Test SilentBoxGallery.vue | Events', () => {
     expect(prevEvent).toHaveProperty('silentbox-overlay-prev-item-displayed')
     expect(prevEvent['silentbox-overlay-prev-item-displayed'][0]).toStrictEqual([props.gallery[2]])
   })
-  it('should close overlay on @closeSilentBoxOverlay', async () => {
+  it('should close overlay on @silentbox-internal-close-overlay', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
     await wrapper.get('.silentbox-item').trigger('click')
     expect(wrapper.find('#silentbox-overlay').exists()).toBeTruthy()
@@ -325,49 +325,16 @@ describe('Test SilentBoxGallery.vue | Other tests', () => {
   })
   it('should return thumbnail based on src when no thumbnail is provided', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
-    const item = {
-      src: 'https://example.com/thumbnail.jpg'
-    }
-    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/thumbnail.jpg')
-  })
-  it('should return thumbnail if provided', async () => {
-    const wrapper = mount(SilentBoxGallery, { props })
-    const item = {
-      src: 'https://example.com/image.jpg',
-      thumbnail: 'https://example.com/thumbnail.jpg'
-    }
-    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/thumbnail.jpg')
+
+    expect(wrapper.vm.setThumbnail('https://example.com/thumbnail.jpg')).toBe('https://example.com/thumbnail.jpg')
   })
   it('should return thumbnail if provided with wrong value: boolean', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
-    const item = {
-      src: 'https://example.com/image.jpg',
-      thumbnail: false
-    }
-    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/image.jpg')
-  })
-  it('should return thumbnail if provided with wrong value: string', async () => {
-    const wrapper = mount(SilentBoxGallery, { props })
-    const item = {
-      src: 'https://example.com/image.jpg',
-      thumbnail: 'string'
-    }
-    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/image.jpg')
-  })
-  it('should return thumbnail if provided with wrong value: number', async () => {
-    const wrapper = mount(SilentBoxGallery, { props })
-    const item = {
-      src: 'https://example.com/image.jpg',
-      thumbnail: 12345
-    }
-    expect(wrapper.vm.setThumbnail(item)).toBe('https://example.com/image.jpg')
+    expect(wrapper.vm.setThumbnail('https://example.com/image.jpg')).toBe('https://example.com/image.jpg')
   })
   it('should return thumbnail if provided with YouTube link', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
-    const item = {
-      src: 'https://www.youtube.com/watch?v=1xqwnD3BdT4'
-    }
-    expect(wrapper.vm.setThumbnail(item)).toBe('https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
+    expect(wrapper.vm.setThumbnail('https://www.youtube.com/watch?v=1xqwnD3BdT4')).toBe('https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
   })
   it('should create valid item', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
@@ -381,6 +348,6 @@ describe('Test SilentBoxGallery.vue | Other tests', () => {
       thumbnailWidth: 150,
       thumbnailHeight: 150
     }
-    expect(wrapper.vm.mapItem(item)).toStrictEqual(item)
+    expect(wrapper.vm.mapGalleryItem(item)).toStrictEqual(item)
   })
 })

@@ -3,6 +3,9 @@ import { isValidURL } from './itemUtils'
 /**
  * XMLHttpRequest is used because Vue does not work very well with top-level
  * async setup. Thus, we need to make this call synchronnous.
+ *
+ * @param {string} url
+ * return any
  */
 export const httpGet = (url: string): any => {
   if (isValidURL(url)) {
@@ -16,5 +19,5 @@ export const httpGet = (url: string): any => {
       return null
     }
   }
-  throw new Error('Passed source URL is not a valid URL.')
+  throw new Error('Given string: url is not valid URL address.')
 }

@@ -28,7 +28,7 @@ describe('Test httpGet(url: string): any', () => {
     expect(httpGet('http://example.com')).toStrictEqual({ url: 'http://example.com', method: 'GET' })
   })
   it('should throw error when URL is not valid URL', () => {
-    expect(() => httpGet('http://example')).toThrowError('Passed source URL is not a valid URL.')
+    expect(() => httpGet('http://example')).toThrowError('Given string: url is not valid URL address.')
   })
   it('should return NULL when request fails', () => {
     vi.stubGlobal('XMLHttpRequest', FakeErrorXMLHttpRequest)
