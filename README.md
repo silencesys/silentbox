@@ -12,10 +12,6 @@ A third version of the lightweight lightbox inspired component for Vue.js with l
 
 <br>
 
-**Beaware: This is a work in progress and not ready for production yet.**
-
-<br>
-
 <br>
 
 ## Supported formats and services
