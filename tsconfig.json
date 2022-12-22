@@ -13,6 +13,7 @@
   ],
   "compilerOptions": {
     "target": "esnext",
+    "moduleResolution": "node"
   },
   "vueCompilerOptions": {
     "target": "3"

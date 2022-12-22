@@ -326,15 +326,15 @@ describe('Test SilentBoxGallery.vue | Other tests', () => {
   it('should return thumbnail based on src when no thumbnail is provided', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
 
-    expect(wrapper.vm.setThumbnail('https://example.com/thumbnail.jpg')).toBe('https://example.com/thumbnail.jpg')
+    expect(wrapper.vm.getThumbnailURL('https://example.com/thumbnail.jpg')).toBe('https://example.com/thumbnail.jpg')
   })
   it('should return thumbnail if provided with wrong value: boolean', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
-    expect(wrapper.vm.setThumbnail('https://example.com/image.jpg')).toBe('https://example.com/image.jpg')
+    expect(wrapper.vm.getThumbnailURL('https://example.com/image.jpg')).toBe('https://example.com/image.jpg')
   })
   it('should return thumbnail if provided with YouTube link', async () => {
     const wrapper = mount(SilentBoxGallery, { props })
-    expect(wrapper.vm.setThumbnail('https://www.youtube.com/watch?v=1xqwnD3BdT4')).toBe('https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
+    expect(wrapper.vm.getThumbnailURL('https://www.youtube.com/watch?v=1xqwnD3BdT4')).toBe('https://img.youtube.com/vi/1xqwnD3BdT4/hqdefault.jpg')
   })
   it('should create valid item', async () => {
     const wrapper = mount(SilentBoxGallery, { props })

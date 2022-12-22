@@ -34,11 +34,13 @@ Import the plugin into Vue:
 ```js
 import { createApp } from 'vue'
 import VueSilentbox from 'vue-silentbox'
+import 'vue-silentbox/dist/style.css'
 
-const app = createApp({
-    // ... your app stuff
+createApp({
+    // your app props ...
 })
-app.use(VueSilentbox)
+.use(VueSilentbox)
+.mount('#root')
 ```
 
 <br>
@@ -47,8 +49,10 @@ app.use(VueSilentbox)
 Define an array of images in the data object of your Vue instance or component.
 ```js
 import { createApp } from 'vue'
+import VueSilentbox from 'vue-silentbox'
+import 'vue-silentbox/dist/style.css'
 
-const app = createApp({
+createApp({
     data: {
         images: [
             {
@@ -64,8 +68,8 @@ const app = createApp({
         ]
     },
 })
-app.use(VueSilentbox)
-app.mount('#app')
+.use(VueSilentbox)
+.mount('#root')
 ```
 
 Then in the template you use a `silent-box` component to display the gallery.

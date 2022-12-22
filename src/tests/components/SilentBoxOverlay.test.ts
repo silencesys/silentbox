@@ -146,27 +146,27 @@ describe('Test SilentBoxOverlay.vue | Functions', () => {
   }
   it('should identify youtube video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
-    expect(wrapper.vm.parseURL(youtubeProps.item.src)).toBe('https://www.youtube.com/embed/1xqwnD3BdT4?rel=0')
+    expect(wrapper.vm.getVideoURL(youtubeProps.item.src)).toBe('https://www.youtube.com/embed/1xqwnD3BdT4?rel=0')
   })
   it('should parse youtube video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
-    expect(wrapper.vm.parseYouTubeVideo(youtubeProps.item.src)).toBe('https://www.youtube.com/embed/1xqwnD3BdT4?rel=0')
+    expect(wrapper.vm.getYouTubeVideoURL(youtubeProps.item.src)).toBe('https://www.youtube.com/embed/1xqwnD3BdT4?rel=0')
   })
   it('should return empty string if is not youtube video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: vimeoProps })
-    expect(wrapper.vm.parseYouTubeVideo(vimeoProps.item.src)).toBe('')
+    expect(wrapper.vm.getYouTubeVideoURL(vimeoProps.item.src)).toBe('')
   })
   it('should identify vimeo video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: vimeoProps })
-    expect(wrapper.vm.parseURL(vimeoProps.item.src)).toBe('https://player.vimeo.com/video/238573128?rel=0')
+    expect(wrapper.vm.getVideoURL(vimeoProps.item.src)).toBe('https://player.vimeo.com/video/238573128?rel=0')
   })
   it('should parse vimeo video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: vimeoProps })
-    expect(wrapper.vm.parseVimeoVideo(vimeoProps.item.src)).toBe('https://player.vimeo.com/video/238573128?rel=0')
+    expect(wrapper.vm.getVimeoVideoURL(vimeoProps.item.src)).toBe('https://player.vimeo.com/video/238573128?rel=0')
   })
   it('should return empty string if is not vimeo video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
-    expect(wrapper.vm.parseVimeoVideo(youtubeProps.item.src)).toBe('')
+    expect(wrapper.vm.getVimeoVideoURL(youtubeProps.item.src)).toBe('')
   })
 })
 

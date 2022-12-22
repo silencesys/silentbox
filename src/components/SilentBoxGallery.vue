@@ -42,7 +42,7 @@ const overlay: OverlayProps = reactive({
  * @param {string} itemSrc
  * @return string
  */
-const setThumbnail = (itemSrc: string): string => {
+const getThumbnailURL = (itemSrc: string): string => {
   if (isEmbedVideo(itemSrc)) {
     return getThumbnail(itemSrc, props.fallbackThumbnail)
   }
@@ -57,7 +57,7 @@ const setThumbnail = (itemSrc: string): string => {
 const mapGalleryItem = (item: ItemProps): ItemProps => ({
   ...overlay.item,
   ...item,
-  thumbnail: item.thumbnail ? item.thumbnail : setThumbnail(item.src)
+  thumbnail: item.thumbnail ? item.thumbnail : getThumbnailURL(item.src)
 })
 /**
  * Create gallery with items that alwys contain all necessary information.
@@ -65,7 +65,7 @@ const mapGalleryItem = (item: ItemProps): ItemProps => ({
  *
  * @return ItemProps[]
  */
-const createGallery = (): ItemProps[] => {
+const getGalleryItems = (): ItemProps[] => {
   if (props.gallery && props.gallery.length > 0) {
     // Show whole gallery
     return props.gallery.map(mapGalleryItem)
@@ -82,18 +82,18 @@ const createGallery = (): ItemProps[] => {
  *
  * @return ItemProps[]
  */
-const getThumbnailGallery = computed<ItemProps[]>(() => {
+const getGalleryThumbnails = computed<ItemProps[]>(() => {
   if (props.previewCount && props.previewCount > 0 && props.gallery) {
     return props.gallery.slice(0, props.previewCount).map(mapGalleryItem)
   }
-  return createGallery()
+  return getGalleryItems()
 })
 /**
  * Cache gallery in computed property.
  *
  * @return ItemProps[]
  */
-const getGallery = computed<ItemProps[]>(() => createGallery())
+const getGallery = computed<ItemProps[]>(() => getGalleryItems())
 
 const emit = defineEmits([
   'silentbox-overlay-opened',
@@ -162,7 +162,7 @@ defineExpose({ openOverlay })
     <slot />
     <a
       :key="image.src"
-      v-for="(image, index) in getThumbnailGallery"
+      v-for="(image, index) in getGalleryThumbnails"
       :href="image.src"
       @click.prevent="openOverlay(image, index)"
       class="silentbox-item"

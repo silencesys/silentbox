@@ -1,6 +1,6 @@
 {
   "name": "vue-silentbox",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0",
   "scripts": {
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
@@ -14,10 +14,11 @@
   "dependencies": {
     "vue": "^3.2.40"
   },
-  "main": "dist/my-lib.js",
-  "module": "dist/my-lib.mjs",
-  "typings": "dist/my-lib.d.ts",
+  "main": "dist/silent-box.umd.js",
+  "module": "dist/silent-box.es.js",
+  "typings": "dist/src/main.d.ts",
   "devDependencies": {
+    "@babel/types": "^7.20.7",
     "@testing-library/vue": "^6.6.1",
     "@types/jsdom": "^20.0.0",
     "@types/node": "^16.11.56",
@@ -36,6 +37,7 @@
     "sass": "^1.55.0",
     "typescript": "~4.7.4",
     "vite": "^3.0.9",
+    "vite-plugin-dts": "^1.7.1",
     "vitest": "^0.23.4",
     "vue-tsc": "^1.0.3"
   }

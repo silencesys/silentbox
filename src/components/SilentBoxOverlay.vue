@@ -19,7 +19,7 @@ const props = defineProps<OverlayProps>()
  * @param {string} url any video URL from YouTube
  * @return string
  */
-const parseYouTubeVideo = (url: string): string => {
+const getYouTubeVideoURL = (url: string): string => {
   let videoURL = ''
   const videoId = getYoutubeVideoId(url)
   if (videoId) {
@@ -36,7 +36,7 @@ const parseYouTubeVideo = (url: string): string => {
  * @param {string} url any video URL from Vimeo or VimeoPro
  * @return string
  */
-const parseVimeoVideo = (url: string): string => {
+const getVimeoVideoURL = (url: string): string => {
   let videoURL = ''
   const videoId = getVimeoVideoId(url)
   if (videoId) {
@@ -52,11 +52,11 @@ const parseVimeoVideo = (url: string): string => {
  * @param {string} url
  * @return {string}
  */
-const parseURL = (url: string): string => {
+const getVideoURL = (url: string): string => {
   if (/(youtu\.?be)/.test(url)) {
-    return parseYouTubeVideo(url)
+    return getYouTubeVideoURL(url)
   } else if (/(vimeo(pro)?\.com)/.test(url)) {
-    return parseVimeoVideo(url)
+    return getVimeoVideoURL(url)
   }
   return url
 }
@@ -100,7 +100,7 @@ const handleMovePrev = (): void => {
   emit('silentbox-internal-get-prev-item')
 }
 
-const touchData = reactive({
+const touchPosition = reactive({
   posX: 0,
   posY: 0
 })
@@ -111,8 +111,8 @@ const touchData = reactive({
  */
 const touchStart = (event: TouchEvent): void => {
   const { clientX: x, clientY: y } = event.touches[0]
-  touchData.posX = x
-  touchData.posY = y
+  touchPosition.posX = x
+  touchPosition.posY = y
 }
 /**
  * Calculate user's touch movement direction, so we can change overlay content
@@ -120,17 +120,15 @@ const touchStart = (event: TouchEvent): void => {
  *
  * @param {TouchEvent} event
  */
-const touchMove = (event: TouchEvent): void => {
+const handleTouchMove = (event: TouchEvent): void => {
   const { clientX: x, clientY: y } = event.touches[0]
-  const { posX, posY } = touchData
+  const { posX, posY } = touchPosition
 
   if (posX === 0 || posY === 0) {
     // return if user did not moved
     return
   }
-  // calculate difference between start and movement on x-axis
   const xDiff = posX - x
-  // calculate difference between start and movement on y-axis
   const yDiff = posY - y
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
     // User moved on x-axis
@@ -147,15 +145,15 @@ const touchMove = (event: TouchEvent): void => {
   }
 
   // Reset start position for next event
-  touchData.posX = 0
-  touchData.posY = 0
+  touchPosition.posX = 0
+  touchPosition.posY = 0
 }
 /**
  * Register keyboard interaction.
  *
  * @param {KeyboardEvent} event
  */
-const handleKeys = (event: KeyboardEvent): void => {
+const handleKeyInteraction = (event: KeyboardEvent): void => {
   if (event.code === 'Escape') handleClose()
   if (event.code === 'ArrowRight') handleMoveNext()
   if (event.code === 'ArrowLeft') handleMovePrev()
@@ -165,10 +163,10 @@ onUpdated(() => {
   // for each instance of silent-box. Other hooks as onBeforeUnmount or
   // onUnmount does not remove event listner, thus this awkward condition.
   if (props.visible) {
-    window.addEventListener('keyup', handleKeys)
+    window.addEventListener('keyup', handleKeyInteraction)
     lockScrolling()
   } else {
-    window.removeEventListener('keyup', handleKeys)
+    window.removeEventListener('keyup', handleKeyInteraction)
     unlockScrolling()
   }
 })
@@ -180,7 +178,7 @@ onUpdated(() => {
     v-if="props.visible"
     role="overlay"
     @touchstart="touchStart"
-    @touchmove="touchMove"
+    @touchmove="handleTouchMove"
   >
     <div id="silentbox-overlay__background" />
     <transition :name="animation.name" mode="out-in">
@@ -195,7 +193,7 @@ onUpdated(() => {
             <iframe
               v-if="isEmbedVideo(props.item.src)"
               :allow="`accelerometer; ${ !!props.item.autoplay && 'autoplay;' } encrypted-media; gyroscope; picture-in-picture`"
-              :src="parseURL(props.item.src)"
+              :src="getVideoURL(props.item.src)"
               frameborder="0"
               width="100%"
               height="100%"
