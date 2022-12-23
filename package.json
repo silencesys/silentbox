@@ -1,6 +1,6 @@
 {
   "name": "vue-silentbox",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "scripts": {
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
@@ -11,13 +11,37 @@
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
-  "dependencies": {
-    "vue": "^3.2.40"
+  "keywords": [
+    "Vue",
+    "Silentbox",
+    "Lightbox",
+    "Fancybox",
+    "Vuejs",
+    "Vue component",
+    "Vue 2",
+    "Gallery",
+    "Image viewer",
+    "Image slider",
+    "Images",
+    "Galleries",
+    "Fancybox-gallery",
+    "Lightbox-gallery"
+  ],
+  "homepage": "https://silentbox.silencesys.com/",
+  "author": "Martin Roček",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/silencesys/silentbox/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silencesys/silentbox.git"
   },
   "main": "dist/silent-box.umd.js",
   "module": "dist/silent-box.es.js",
   "typings": "dist/src/main.d.ts",
   "devDependencies": {
+    "vue": "^3.2.40",
     "@babel/types": "^7.20.7",
     "@testing-library/vue": "^6.6.1",
     "@types/jsdom": "^20.0.0",
