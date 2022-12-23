@@ -1,5 +1,9 @@
-![SilentBox logo](https://silentbox.rocek.dev/images/sb3-dark.png#gh-dark-mode-only)
-![SilentBox logo](https://silentbox.rocek.dev/images/sb3-light.png#gh-light-mode-only)
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://silentbox.rocek.dev/images/sb3-dark.png">
+  <img alt="SilentBox logo." src="https://silentbox.rocek.dev/images/sb3-light.png">
+</picture>
+</p>
 
 <p align="center">
 <a href="https://github.com/silencesys/silentbox/stargazers"><img src="https://img.shields.io/github/stars/silencesys/silentbox.svg?color=08AEEA&labelColor=169DC1&style=flat-square" alt="Github Stars"></a> <a href="https://github.com/silencesys/silentbox/issues"><img src="https://img.shields.io/github/issues/silencesys/silentbox.svg?style=flat-square&labelColor=25ADA3&color=4CC1B8" alt="Github Issues"></a> <a href="https://github.com/silencesys/silentbox/blob/master/license.md"><img src="https://img.shields.io/github/license/silencesys/silentbox.svg?color=2AC47A&labelColor=389367&style=flat-square" alt="License"></a>
