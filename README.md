@@ -1,7 +1,7 @@
 <p align="center">
 
-![SilentBox logo](https://silentbox.rocek.dev/images/sb-3-dark.png#gh-dark-mode-only)
-![SilentBox logo](https://silentbox.rocek.dev/images/sb-3-light.png#gh-light-mode-only)
+![SilentBox logo](https://silentbox.rocek.dev/images/sb3-dark.png#gh-dark-mode-only)
+![SilentBox logo](https://silentbox.rocek.dev/images/sb3-light.png#gh-light-mode-only)
 
 </p>
 
