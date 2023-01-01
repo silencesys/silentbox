@@ -138,7 +138,7 @@ lazy, only the `src` attribute is required.
 | description | no | string | short description below image (doesn't work below videos yet) |
 | alt | no | string | alt description for images |
 | autoplay | no | bool| to autoplay youtube / Vimeo video |
-| download | no | bool|string | Link to download the file. When set to a boolean value (`true`/`false`), the src is used as the download link. |
+| download | no | bool/string | Link to download the file. When set to a boolean value (`true`/`false`), the src is used as the download link. |
 | controls | no | bool | **does not work for Vimeo**, setting false will hide video controls |
 
 ### Gallery element attributes
