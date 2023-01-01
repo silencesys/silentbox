@@ -8,7 +8,11 @@ export interface ItemProps {
     description?: string;
     autoplay?: boolean;
     controls?: boolean;
+    download?: boolean | string;
 }
 export interface OverlayEventProps {
     item: ItemProps;
+}
+export interface SilentBoxOptions {
+    downloadButtonLabel?: string;
 }

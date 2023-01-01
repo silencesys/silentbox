@@ -16,7 +16,7 @@ const item: ItemProps = {
 }
 
 describe('Test SilentBoxOverlay.vue | Rendering', () => {
-  vi.stubGlobal('location', { protocol: 'https:' })
+  vi.stubGlobal('location', { protocol: 'https:', hostname: 'example.com' })
   const props = {
     item,
     visible: true,
@@ -46,6 +46,23 @@ describe('Test SilentBoxOverlay.vue | Rendering', () => {
   it('should show image preview in overlay for picture file', () => {
     const wrapper = mount(SilentBoxOverlay, { props })
     expect(wrapper.find(`img[src=${item.src}]`).exists()).toBeTruthy()
+    wrapper.unmount()
+  })
+  it('should not show download button in overlay', () => {
+    const wrapper = mount(SilentBoxOverlay, { props })
+    expect(wrapper.find('.download').exists()).toBeFalsy()
+    wrapper.unmount()
+  })
+  it('should show download button in overlay', () => {
+    const downloadableItemProps = {
+      ...props,
+      item: {
+        ...props.item,
+        download: true
+      }
+    }
+    const wrapper = mount(SilentBoxOverlay, { props: downloadableItemProps })
+    expect(wrapper.find('.download').exists()).toBeTruthy()
     wrapper.unmount()
   })
   it('should show video iframe in overlay for video link', () => {
@@ -144,6 +161,13 @@ describe('Test SilentBoxOverlay.vue | Functions', () => {
       src: 'https://vimeo.com/238573128'
     }
   }
+  const twitchProps = {
+    ...props,
+    item: {
+      ...item,
+      src: 'https://player.twitch.tv/?channel=method'
+    }
+  }
   it('should identify youtube video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
     expect(wrapper.vm.getVideoURL(youtubeProps.item.src)).toBe('https://www.youtube.com/embed/1xqwnD3BdT4?rel=0')
@@ -166,7 +190,19 @@ describe('Test SilentBoxOverlay.vue | Functions', () => {
   })
   it('should return empty string if is not vimeo video', async () => {
     const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
-    expect(wrapper.vm.getVimeoVideoURL(youtubeProps.item.src)).toBe('')
+    expect(wrapper.vm.getVimeoVideoURL(twitchProps.item.src)).toBe('')
+  })
+  it('should identify twitch video', async () => {
+    const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
+    expect(wrapper.vm.getVideoURL(twitchProps.item.src)).toBe('https://player.twitch.tv/?channel=method&parent=example.com')
+  })
+  it('should parse twitch video', async () => {
+    const wrapper = mount(SilentBoxOverlay, { props: youtubeProps })
+    expect(wrapper.vm.getTwitchVideURL(twitchProps.item.src)).toBe('https://player.twitch.tv/?channel=method&parent=example.com')
+  })
+  it('should return empty string if is not twitch video', async () => {
+    const wrapper = mount(SilentBoxOverlay, { props: vimeoProps })
+    expect(wrapper.vm.getTwitchVideURL(vimeoProps.item.src)).toBe('')
   })
 })
 

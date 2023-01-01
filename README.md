@@ -20,7 +20,7 @@ A third version of the lightweight lightbox inspired component for Vue.js with l
 ## Supported formats and services
 - All image formats that can be displayed in browser
 - Local video files with following extensions .mp4, .ogg, .webm, .mov, .flv, .wmv, .mkv
-- YouTube and Vimeo embed videos with autoplay
+- YouTube, Vimeo and Twitch embed videos with autoplay
 
 <br>
 
@@ -103,6 +103,25 @@ In this example only alt text is displayed as an activator.
 </silent-box>
 ```
 
+### Plugin options
+You can set the following options to the plugin to change the behaviour of the
+SilentBox or display additional information.
+
+| Name | Required | Type | Default | Description |
+|:------| :------: | :------: |:------|
+| downloadButtonLabel | no | string | Download | Label used in the download button. |
+
+```js
+createApp({
+    // your app props ...
+})
+.use(VueSilentbox, {
+    downloadButtonLabel: 'Download'
+})
+.mount('#root')
+```
+
+
 ### Image object attributes
 
 You can set the following attributes to the image object to change the behaviour
@@ -119,6 +138,7 @@ lazy, only the `src` attribute is required.
 | description | no | string | short description below image (doesn't work below videos yet) |
 | alt | no | string | alt description for images |
 | autoplay | no | bool| to autoplay youtube / Vimeo video |
+| download | no | bool|string | Link to download the file. When set to a boolean value (`true`/`false`), the src is used as the download link. |
 | controls | no | bool | **does not work for Vimeo**, setting false will hide video controls |
 
 ### Gallery element attributes

@@ -30,7 +30,8 @@ const overlay: OverlayProps = reactive({
     thumbnail: '',
     autoplay: false,
     controls: true,
-    description: ''
+    description: '',
+    download: false
   },
   visible: false,
   currentItem: 0,
@@ -56,6 +57,7 @@ const getThumbnailURL = (itemSrc: string): string => {
  */
 const mapGalleryItem = (item: ItemProps): ItemProps => ({
   ...overlay.item,
+  download: false, // reset download for each item
   ...item,
   thumbnail: item.thumbnail ? item.thumbnail : getThumbnailURL(item.src)
 })

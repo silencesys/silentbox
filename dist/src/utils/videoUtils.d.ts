@@ -12,3 +12,4 @@ export declare const getYoutubeVideoId: (url: string) => string;
  * @return string
  */
 export declare const getVimeoVideoId: (url: string) => string;
+export declare const getTwitchChannelId: (url: string) => string;

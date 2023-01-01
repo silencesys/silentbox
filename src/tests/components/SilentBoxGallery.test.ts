@@ -12,7 +12,8 @@ const item: ItemProps = {
   autoplay: false,
   alt: 'Alternative text',
   controls: false,
-  description: 'Item description'
+  description: 'Item description',
+  download: false
 }
 const videoItem: ItemProps = {
   ...item,
@@ -346,7 +347,8 @@ describe('Test SilentBoxGallery.vue | Other tests', () => {
       description: 'Image description',
       alt: 'Image alt',
       thumbnailWidth: 150,
-      thumbnailHeight: 150
+      thumbnailHeight: 150,
+      download: false
     }
     expect(wrapper.vm.mapGalleryItem(item)).toStrictEqual(item)
   })

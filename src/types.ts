@@ -7,8 +7,13 @@ export interface ItemProps {
   alt?: string,
   description?: string,
   autoplay?: boolean,
-  controls?: boolean
+  controls?: boolean,
+  download?: boolean|string
 }
 export interface OverlayEventProps {
   item: ItemProps
+}
+
+export interface SilentBoxOptions {
+  downloadButtonLabel?: string
 }

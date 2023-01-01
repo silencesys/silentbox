@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { isEmbedVideo, isLocalVideo } from '../utils/itemUtils'
-import type { ItemProps } from '../types'
-import { getVimeoVideoId, getYoutubeVideoId } from '../utils/videoUtils'
-import { onUpdated, reactive } from 'vue'
+import type { ItemProps, SilentBoxOptions } from '../types'
+import { getVimeoVideoId, getYoutubeVideoId, getTwitchChannelId } from '../utils/videoUtils'
+import { onUpdated, reactive, computed, inject } from 'vue'
 
 export interface OverlayProps {
   item: ItemProps,
@@ -11,7 +11,22 @@ export interface OverlayProps {
   totalItems: number
 }
 
+// Inject plugin options, ensure the label is always defined.
+const silentBoxOptions = inject<SilentBoxOptions>('silent-box-options') ||
+  { downloadButtonLabel: 'Download' }
+
 const props = defineProps<OverlayProps>()
+
+/**
+ * Compute download link property.
+ * @return {string}
+ */
+const downloadLink = computed<string>(() => {
+  if (typeof props.item.download === 'string') {
+    return props.item.download
+  }
+  return props.item.src
+})
 
 /**
  * Get YouTube video embed URL and set autoplay and controls state.
@@ -46,6 +61,18 @@ const getVimeoVideoURL = (url: string): string => {
   return videoURL
 }
 /**
+ * Get Twitch video embed URL.
+ */
+const getTwitchVideURL = (url: string): string => {
+  let videoURL = ''
+  const channelID = getTwitchChannelId(url)
+  if (channelID) {
+    videoURL = `${location.protocol}//player.twitch.tv/?channel=${channelID}&parent=${location.hostname}`
+    if (props.item.autoplay) videoURL += '&autoplay=true'
+  }
+  return videoURL
+}
+/**
  * Check whether provided URL is YouTube or Vimeo, otherwise always return it
  * as it is.
  *
@@ -57,6 +84,8 @@ const getVideoURL = (url: string): string => {
     return getYouTubeVideoURL(url)
   } else if (/(vimeo(pro)?\.com)/.test(url)) {
     return getVimeoVideoURL(url)
+  } else if (/(?:player\.|clips\.|www\.)?twitch\.tv/.test(url)) {
+    return getTwitchVideURL(url)
   }
   return url
 }
@@ -188,7 +217,7 @@ onUpdated(() => {
         :key="props.item.src"
       >
         <div id="silentbox-overlay__embed">
-          <div id="silentbox-overlay__container">
+          <div id="silentbox-overlay__container" @click.stop>
             <!-- Embed video rendering -->
             <iframe
               v-if="isEmbedVideo(props.item.src)"
@@ -226,6 +255,9 @@ onUpdated(() => {
             >
               {{ props.item.description }}
             </p>
+            <div v-if="props.item.download" id="silentbox-overlay__tool-buttons">
+              <a :href="downloadLink" class="download" download>{{ silentBoxOptions.downloadButtonLabel }}</a>
+            </div>
           </div>
       </div>
     </transition>
@@ -331,6 +363,56 @@ $bg: #000;
     position: relative;
     text-align: center;
     width: 100%;
+  }
+  @include element(tool-buttons) {
+    text-align: center;
+    margin-top: 1rem;
+    width: 100%;
+    a {
+      color: $main;
+      position: relative;
+      display: inline-block;
+      line-height: 1.5rem;
+      font-size: .9rem;
+      border: 1px solid $main;
+      border-radius: 1rem;
+      padding: .15rem .8rem;
+      &:hover {
+        color: $accent;
+        border-color: $accent;
+        &.download::before {
+          background: $accent;
+        }
+        &.download::after {
+          border-color: $accent;
+        }
+      }
+      &.download {
+        padding-right: 1.8rem;
+      }
+      &.download::before {
+        content: ' ';
+        display: block;
+        width: 1px;
+        height: 9px;
+        position: absolute;
+        right: calc(.9rem + 3px);
+        top: .6rem;
+        background: $main;
+      }
+      &.download::after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        right: .9rem;
+        top: .65rem;
+        border-bottom: 1px solid $main;
+        border-right: 1px solid $main;
+        width: 7px;
+        height: 7px;
+        transform: rotate(45deg);
+      }
+    }
   }
   @include element(description) {
     display: block;

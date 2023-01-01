@@ -18,6 +18,9 @@ describe.concurrent('it isEmbedVideo(itemSrc: string): boolean', () => {
   it('Vimeo embed player URL is recognized as supported video service', () => {
     expect(isEmbedVideo('https://player.vimeo.com/video/238573128')).toBeTruthy()
   })
+  it('Twitch embed player URL is recognized as supported video service', () => {
+    expect(isEmbedVideo('https://player.twitch.tv/method')).toBeTruthy()
+  })
   it('Other URL is recognized as unsupported video service', () => {
     expect(isEmbedVideo('https://google.com')).toBeFalsy()
   })

@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { getYoutubeVideoId, getVimeoVideoId } from '../../../utils/videoUtils'
+import { getYoutubeVideoId, getVimeoVideoId, getTwitchChannelId } from '../../../utils/videoUtils'
 
 describe.concurrent('Test getYoutubeVideoId(url: string): string', () => {
   test('Get ID from ordinary YouTube video URL', () => {
@@ -37,5 +37,23 @@ describe.concurrent('Test getVimeoVideoId(url: string): string', () => {
   })
   test('Non valid URL - numbers - return false', () => {
     expect(getVimeoVideoId('123456')).toBeFalsy()
+  })
+})
+
+describe.concurrent('Test getTwitchVideoUrl(url: string): string', () => {
+  test('Get ID from ordinary Twitch video URL', () => {
+    expect(getTwitchChannelId('https://www.twitch.tv/method')).toBe('method')
+  })
+  test('Get ID from embed video URL', () => {
+    expect(getTwitchChannelId('https://player.twitch.tv/?channel=method&parent=www.example.com')).toBe('method')
+  })
+  test('Wrong link return false', () => {
+    expect(getTwitchChannelId('https://google.com')).toBeFalsy()
+  })
+  test('Non valid URL - string - return false', () => {
+    expect(getTwitchChannelId('abecede')).toBeFalsy()
+  })
+  test('Non valid URL - numbers - return false', () => {
+    expect(getTwitchChannelId('123456')).toBeFalsy()
   })
 })

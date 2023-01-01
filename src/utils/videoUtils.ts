@@ -20,3 +20,9 @@ export const getVimeoVideoId = (url: string): string => {
   const match = regExp.exec(url)
   return match ? match[3] : ''
 }
+
+export const getTwitchChannelId = (url: string): string => {
+  const regExp = /(?:player\.twitch\.tv\/\?channel=|twitch\.tv\/)([a-zA-Z0-9_]+)/
+  const match = regExp.exec(url)
+  return match ? match[1] : ''
+}

@@ -60,9 +60,12 @@ declare const _sfc_main: import("vue").DefineComponent<{
             required: true;
         };
     }, {
+        silentBoxOptions: import("../types").SilentBoxOptions;
         props: any;
+        downloadLink: import("vue").ComputedRef<string>;
         getYouTubeVideoURL: (url: string) => string;
         getVimeoVideoURL: (url: string) => string;
+        getTwitchVideURL: (url: string) => string;
         getVideoURL: (url: string) => string;
         lockScrolling: () => void;
         unlockScrolling: () => void;

@@ -1,11 +1,15 @@
 import { createApp, type App, type Plugin } from 'vue'
 import GalleryVue from './components/SilentBoxGallery.vue'
 import OverlayVue from './components/SilentBoxOverlay.vue'
-import type { ItemProps } from './types'
+import type { ItemProps, SilentBoxOptions } from './types'
 
 const SilentBox: Plugin = {
-  install: (Vue: App): void => {
+  install: (Vue: App, options: SilentBoxOptions = {}): void => {
     Vue.component('silent-box', GalleryVue)
+    Vue.provide('silent-box-options', {
+      downloadButtonLabel: 'Download',
+      ...options
+    })
 
     /**
      * Global function to call SilentBox on any element.
