@@ -108,7 +108,7 @@ You can set the following options to the plugin to change the behaviour of the
 SilentBox or display additional information.
 
 | Name | Required | Type | Default | Description |
-|:------| :------: | :------: |:------|
+|:------| :------: | :------: | :------: |:------|
 | downloadButtonLabel | no | string | Download | Label used in the download button. |
 
 ```js
