@@ -40,6 +40,9 @@
   "main": "dist/silent-box.umd.js",
   "module": "dist/silent-box.es.js",
   "typings": "dist/src/main.d.ts",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "vue": "^3.2.40",
     "@babel/types": "^7.20.7",
