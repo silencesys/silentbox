@@ -1,6 +1,6 @@
 {
   "name": "vue-silentbox",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "scripts": {
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
